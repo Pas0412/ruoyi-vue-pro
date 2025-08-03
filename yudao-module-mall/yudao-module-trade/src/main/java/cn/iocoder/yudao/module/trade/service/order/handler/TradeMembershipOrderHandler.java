@@ -94,6 +94,6 @@ public class TradeMembershipOrderHandler implements TradeOrderHandler {
                 return now.plusDays(1);
             }
         }
-        return now.plusYears(1); // 默认1个月
+        return now.plusYears(1); // 默认1年
     }
 }
