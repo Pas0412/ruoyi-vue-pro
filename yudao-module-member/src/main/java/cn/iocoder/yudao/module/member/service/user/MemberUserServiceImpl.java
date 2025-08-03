@@ -34,6 +34,7 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.framework.common.util.servlet.ServletUtils.getClientIP;
@@ -314,4 +315,86 @@ public class MemberUserServiceImpl implements MemberUserService {
         return true;
     }
 
+    @Override
+    @Transactional
+    public void activateMember(Long userId, LocalDateTime expireTime) {
+        // 校验用户存在
+        MemberUserDO user = memberUserMapper.selectById(userId);
+        if (user == null) {
+            throw exception(USER_NOT_EXISTS);
+        }
+
+        // 更新会员到期时间
+        MemberUserDO updateObj = new MemberUserDO();
+        updateObj.setId(userId);
+        updateObj.setLevelId(1L);
+        updateObj.setMemberExpireTime(expireTime);
+
+        int updateCount = memberUserMapper.updateById(updateObj);
+        if (updateCount == 0) {
+            throw exception(USER_NOT_EXISTS);
+        }
+
+        log.info("[activateMember][userId({}) 激活会员成功，到期时间:{}]", userId, expireTime);
+    }
+
+    @Override
+    @Transactional
+    public void cancelMember(Long userId) {
+        // 校验用户存在
+        MemberUserDO user = memberUserMapper.selectById(userId);
+        if (user == null) {
+            throw exception(USER_NOT_EXISTS);
+        }
+
+        // 清空会员到期时间
+        MemberUserDO updateObj = new MemberUserDO();
+        updateObj.setId(userId);
+        updateObj.setLevelId(null);
+        updateObj.setMemberExpireTime(null);
+
+        int updateCount = memberUserMapper.updateById(updateObj);
+        if (updateCount == 0) {
+            throw exception(USER_NOT_EXISTS);
+        }
+
+        log.info("[cancelMember][userId({}) 取消会员成功]", userId);
+    }
+
+    @Override
+    @Transactional
+    public int cleanExpiredMembers() {
+        // 查询已到期的会员
+        List<MemberUserDO> expiredMembers = memberUserMapper.selectListByExpired(LocalDateTime.now());
+        if (CollUtil.isEmpty(expiredMembers)) {
+            return 0;
+        }
+
+        // 批量清理过期会员
+        List<Long> expiredUserIds = expiredMembers.stream()
+                .map(MemberUserDO::getId)
+                .collect(Collectors.toList());
+
+        int count = memberUserMapper.batchUpdateMemberExpireTimeToNull(expiredUserIds);
+
+        log.info("[cleanExpiredMembers][清理过期会员 {} 个]", count);
+        return count;
+    }
+
+    @Override
+    public boolean isValidMember(Long userId) {
+        MemberUserDO user = memberUserMapper.selectById(userId);
+        if (user == null || user.getMemberExpireTime() == null) {
+            return false;
+        }
+
+        // 检查是否过期
+        return user.getMemberExpireTime().isAfter(LocalDateTime.now());
+    }
+
+    @Override
+    public LocalDateTime getMemberExpireTime(Long userId) {
+        MemberUserDO user = memberUserMapper.selectById(userId);
+        return user != null ? user.getMemberExpireTime() : null;
+    }
 }

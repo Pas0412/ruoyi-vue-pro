@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -53,6 +54,29 @@ public class MemberUserApiImpl implements MemberUserApi {
         if (user == null) {
             throw exception(USER_MOBILE_NOT_EXISTS);
         }
+    }
+
+    @Resource
+    private MemberUserService memberUserService;
+
+    @Override
+    public void activateMember(Long userId, LocalDateTime expireTime) {
+        memberUserService.activateMember(userId, expireTime);
+    }
+
+    @Override
+    public void cancelMember(Long userId) {
+        memberUserService.cancelMember(userId);
+    }
+
+    @Override
+    public boolean isValidMember(Long userId) {
+        return memberUserService.isValidMember(userId);
+    }
+
+    @Override
+    public LocalDateTime getMemberExpireTime(Long userId) {
+        return memberUserService.getMemberExpireTime(userId);
     }
 
 }

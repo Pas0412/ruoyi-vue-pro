@@ -9,6 +9,7 @@ import cn.iocoder.yudao.module.member.controller.app.user.vo.*;
 import cn.iocoder.yudao.module.member.dal.dataobject.user.MemberUserDO;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -186,5 +187,43 @@ public interface MemberUserService {
      * @return 更新结果
      */
     boolean updateUserPoint(Long userId, Integer point);
+
+    /**
+     * 激活用户会员
+     *
+     * @param userId 用户ID
+     * @param expireTime 到期时间
+     */
+    void activateMember(Long userId, LocalDateTime expireTime);
+
+    /**
+     * 取消用户会员（退款时调用）
+     *
+     * @param userId 用户ID
+     */
+    void cancelMember(Long userId);
+
+    /**
+     * 清理过期会员
+     *
+     * @return 处理的会员数量
+     */
+    int cleanExpiredMembers();
+
+    /**
+     * 检查用户是否为有效会员
+     *
+     * @param userId 用户ID
+     * @return 是否为有效会员
+     */
+    boolean isValidMember(Long userId);
+
+    /**
+     * 获取用户会员到期时间
+     *
+     * @param userId 用户ID
+     * @return 会员到期时间，NULL表示非会员
+     */
+    LocalDateTime getMemberExpireTime(Long userId);
 
 }

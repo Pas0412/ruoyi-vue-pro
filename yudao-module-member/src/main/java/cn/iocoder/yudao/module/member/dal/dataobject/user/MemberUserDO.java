@@ -142,4 +142,7 @@ public class MemberUserDO extends TenantBaseDO {
      */
     private Long groupId;
 
+
+
+    private LocalDateTime memberExpireTime;
 }

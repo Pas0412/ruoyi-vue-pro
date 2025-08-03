@@ -11,6 +11,7 @@ import cn.iocoder.yudao.module.member.dal.dataobject.user.MemberUserDO;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -92,5 +93,33 @@ public interface MemberUserMapper extends BaseMapperX<MemberUserDO> {
                 .eq(MemberUserDO::getId, id);
         return update(null, lambdaUpdateWrapper);
     }
+
+    /**
+     * 查询已到期的会员列表
+     *
+     * @param currentTime 当前时间
+     * @return 到期会员列表
+     */
+    default List<MemberUserDO> selectListByExpired(LocalDateTime currentTime) {
+        return selectList(new LambdaQueryWrapperX<MemberUserDO>()
+                .le(MemberUserDO::getMemberExpireTime, currentTime)
+                .isNotNull(MemberUserDO::getMemberExpireTime));
+    }
+
+    /**
+     * 批量将会员到期时间设置为NULL
+     *
+     * @param userIds 用户ID列表
+     * @return 更新数量
+     */
+    default int batchUpdateMemberExpireTimeToNull(List<Long> userIds) {
+        if (CollUtil.isEmpty(userIds)) {
+            return 0;
+        }
+        return update(new MemberUserDO().setMemberExpireTime(null).setLevelId(null),
+                new LambdaQueryWrapperX<MemberUserDO>()
+                        .in(MemberUserDO::getId, userIds));
+    }
+
 
 }

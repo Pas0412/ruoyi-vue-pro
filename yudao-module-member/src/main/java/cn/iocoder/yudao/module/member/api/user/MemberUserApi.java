@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.member.api.user;
 
 import cn.iocoder.yudao.module.member.api.user.dto.MemberUserRespDTO;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -64,5 +65,36 @@ public interface MemberUserApi {
      * @param id 用户编号
      */
     void validateUser(Long id);
+
+    /**
+     * 激活用户会员
+     *
+     * @param userId 用户ID
+     * @param expireTime 到期时间
+     */
+    void activateMember(Long userId, LocalDateTime expireTime);
+
+    /**
+     * 取消用户会员
+     *
+     * @param userId 用户ID
+     */
+    void cancelMember(Long userId);
+
+    /**
+     * 检查用户是否为有效会员
+     *
+     * @param userId 用户ID
+     * @return 是否为有效会员
+     */
+    boolean isValidMember(Long userId);
+
+    /**
+     * 获取用户会员到期时间
+     *
+     * @param userId 用户ID
+     * @return 会员到期时间，NULL表示非会员
+     */
+    LocalDateTime getMemberExpireTime(Long userId);
 
 }
