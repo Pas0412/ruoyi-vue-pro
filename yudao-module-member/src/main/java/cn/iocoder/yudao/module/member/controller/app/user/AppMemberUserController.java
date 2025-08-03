@@ -76,4 +76,15 @@ public class AppMemberUserController {
         return success(true);
     }
 
+    @GetMapping("/get-level-id")
+    @Operation(summary = "根据用户ID获得会员等级ID")
+    @PermitAll
+    public CommonResult<Long> getUserLevelId(@RequestParam("userId") Long userId) {
+        MemberUserDO user = userService.getUser(userId);
+        if (user == null) {
+            return success(null);
+        }
+        return success(user.getLevelId());
+    }
+
 }
