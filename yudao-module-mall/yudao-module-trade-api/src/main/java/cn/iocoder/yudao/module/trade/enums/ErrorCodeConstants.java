@@ -114,4 +114,9 @@ public interface ErrorCodeConstants {
     ErrorCode BROKERAGE_WITHDRAW_UPDATE_STATUS_FAIL_PAY_MERCHANT_EXISTS = new ErrorCode(1_011_008_008, "提现单更新转账状态失败，转账单的商户订单不匹配");
     ErrorCode BROKERAGE_WITHDRAW_UPDATE_STATUS_FAIL_PAY_CHANNEL_NOT_MATCH = new ErrorCode(1_011_008_009, "提现单更新转账状态失败，转账渠道不匹配");
 
+    // ========== 会员商品限购相关 1-011-016-000 ==========
+    ErrorCode MEMBERSHIP_ALREADY_ACTIVE = new ErrorCode(1_011_016_001, "您已经是会员，无法重复购买会员商品");
+    ErrorCode MEMBERSHIP_PRODUCT_ALREADY_PURCHASED = new ErrorCode(1_011_016_002, "您已经购买过会员商品，每人限购1件");
+    ErrorCode MEMBERSHIP_PRODUCT_LIMIT_EXCEEDED = new ErrorCode(1_011_016_003, "会员商品每人限购1件，请调整购买数量");
+
 }
