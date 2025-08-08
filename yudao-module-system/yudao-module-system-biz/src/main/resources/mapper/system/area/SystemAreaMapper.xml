@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.iocoder.yudao.module.system.dal.mysql.area.SystemAreaMapper">
+
+    <!-- 查询地区的所有上级地区（包含自己） -->
+    <select id="selectParentAreas" resultType="cn.iocoder.yudao.module.system.dal.dataobject.area.SystemAreaDO">
+        WITH RECURSIVE area_tree AS (
+            -- 起始节点
+            SELECT id, name, type, parent_id, creator, create_time, updater, update_time, deleted
+            FROM system_area
+            WHERE id = #{areaId} AND deleted = 0
+            
+            UNION ALL
+            
+            -- 递归查询父节点
+            SELECT a.id, a.name, a.type, a.parent_id, a.creator, a.create_time, a.updater, a.update_time, a.deleted
+            FROM system_area a
+            INNER JOIN area_tree t ON a.id = t.parent_id
+            WHERE a.deleted = 0
+        )
+        SELECT * FROM area_tree
+        ORDER BY type DESC
+    </select>
+
+</mapper>
