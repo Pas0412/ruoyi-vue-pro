@@ -115,4 +115,39 @@ public class TradeConfigDO extends BaseDO {
     @TableField(typeHandler = IntegerListTypeHandler.class)
     private List<Integer> brokerageWithdrawTypes;
 
+    // ========== 地区代理相关 ==========
+
+    /**
+     * 是否启用地区代理功能
+     */
+    private Boolean regionalAgentEnabled;
+    /**
+     * 省级代理佣金比例
+     */
+    private Integer regionalAgentProvincePercent;
+    /**
+     * 市级代理佣金比例
+     */
+    private Integer regionalAgentCityPercent;
+    /**
+     * 县级代理佣金比例
+     */
+    private Integer regionalAgentDistrictPercent;
+    /**
+     * 地区代理提现最低金额
+     */
+    private Integer regionalAgentWithdrawMinPrice;
+    /**
+     * 地区代理提现手续费百分比
+     */
+    private Integer regionalAgentWithdrawFeePercent;
+    /**
+     * 地区代理佣金冻结时间(天)
+     */
+    private Integer regionalAgentFrozenDays;
+    /**
+     * 地区代理排除的商品SPU编号列表，逗号分隔
+     */
+    private String regionalAgentExcludeSpuIds;
+
 }

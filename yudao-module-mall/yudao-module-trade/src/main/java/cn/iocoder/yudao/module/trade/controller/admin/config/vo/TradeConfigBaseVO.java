@@ -97,4 +97,43 @@ public class TradeConfigBaseVO {
     @InEnum(value = BrokerageWithdrawTypeEnum.class, message = "提现方式必须是 {value}")
     private List<Integer> brokerageWithdrawTypes;
 
+    // ========== 地区代理相关 ==========
+
+    @Schema(description = "是否启用地区代理功能", requiredMode = Schema.RequiredMode.REQUIRED, example = "true")
+    @NotNull(message = "是否启用地区代理功能不能为空")
+    private Boolean regionalAgentEnabled;
+
+    @Schema(description = "省级代理佣金比例", requiredMode = Schema.RequiredMode.REQUIRED, example = "10")
+    @NotNull(message = "省级代理佣金比例不能为空")
+    @Range(min = 0, max = 100, message = "省级代理佣金比例必须在 0 - 100 之间")
+    private Integer regionalAgentProvincePercent;
+
+    @Schema(description = "市级代理佣金比例", requiredMode = Schema.RequiredMode.REQUIRED, example = "8")
+    @NotNull(message = "市级代理佣金比例不能为空")
+    @Range(min = 0, max = 100, message = "市级代理佣金比例必须在 0 - 100 之间")
+    private Integer regionalAgentCityPercent;
+
+    @Schema(description = "县级代理佣金比例", requiredMode = Schema.RequiredMode.REQUIRED, example = "5")
+    @NotNull(message = "县级代理佣金比例不能为空")
+    @Range(min = 0, max = 100, message = "县级代理佣金比例必须在 0 - 100 之间")
+    private Integer regionalAgentDistrictPercent;
+
+    @Schema(description = "地区代理提现最低金额", requiredMode = Schema.RequiredMode.REQUIRED, example = "10000")
+    @NotNull(message = "地区代理提现最低金额不能为空")
+    @PositiveOrZero(message = "地区代理提现最低金额不能是负数")
+    private Integer regionalAgentWithdrawMinPrice;
+
+    @Schema(description = "地区代理提现手续费百分比", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
+    @NotNull(message = "地区代理提现手续费百分比不能为空")
+    @PositiveOrZero(message = "地区代理提现手续费百分比不能是负数")
+    private Integer regionalAgentWithdrawFeePercent;
+
+    @Schema(description = "地区代理佣金冻结时间(天)", requiredMode = Schema.RequiredMode.REQUIRED, example = "7")
+    @NotNull(message = "地区代理佣金冻结时间不能为空")
+    @PositiveOrZero(message = "地区代理佣金冻结时间不能是负数")
+    private Integer regionalAgentFrozenDays;
+
+    @Schema(description = "地区代理排除的商品SPU编号列表，逗号分隔", example = "643,644,645")
+    private String regionalAgentExcludeSpuIds;
+
 }
