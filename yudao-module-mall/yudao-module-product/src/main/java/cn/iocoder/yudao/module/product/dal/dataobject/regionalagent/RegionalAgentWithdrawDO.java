@@ -5,11 +5,12 @@ import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
 /**
- * 地区代理提现 DO
+ * 区域代理提现 DO
  *
  * @author 芋道源码
  */
@@ -63,7 +64,7 @@ public class RegionalAgentWithdrawDO extends BaseDO {
     /**
      * 收款码
      */
-    private String accountQrCode;
+    private String accountQrCodeUrl;
     /**
      * 银行名称
      */
@@ -86,6 +87,10 @@ public class RegionalAgentWithdrawDO extends BaseDO {
      * 审核时间
      */
     private LocalDateTime auditTime;
+    /**
+     * 审核用户编号
+     */
+    private Long auditUserId;
     /**
      * 备注
      */

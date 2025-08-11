@@ -35,33 +35,9 @@ public interface RegionalAgentWithdrawConvert {
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "auditReason", ignore = true)
     @Mapping(target = "auditTime", ignore = true)
-    @Mapping(target = "auditUserId", ignore = true)
-    @Mapping(target = "creator", ignore = true)
-    @Mapping(target = "createTime", ignore = true)
-    @Mapping(target = "updater", ignore = true)
-    @Mapping(target = "updateTime", ignore = true)
-    @Mapping(target = "deleted", ignore = true)
     RegionalAgentWithdrawDO convert(AppRegionalAgentWithdrawCreateReqVO bean, Long userId);
 
     @Mapping(target = "userId", source = "userId")
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "price", ignore = true)
-    @Mapping(target = "feePrice", ignore = true)
-    @Mapping(target = "totalPrice", ignore = true)
-    @Mapping(target = "name", ignore = true)
-    @Mapping(target = "accountNo", ignore = true)
-    @Mapping(target = "accountQrCodeUrl", ignore = true)
-    @Mapping(target = "bankName", ignore = true)
-    @Mapping(target = "bankAddress", ignore = true)
-    @Mapping(target = "auditReason", ignore = true)
-    @Mapping(target = "auditTime", ignore = true)
-    @Mapping(target = "auditUserId", ignore = true)
-    @Mapping(target = "remark", ignore = true)
-    @Mapping(target = "creator", ignore = true)
-    @Mapping(target = "createTime", ignore = true)
-    @Mapping(target = "updater", ignore = true)
-    @Mapping(target = "updateTime", ignore = true)
-    @Mapping(target = "deleted", ignore = true)
     RegionalAgentWithdrawPageReqVO convert(AppRegionalAgentWithdrawPageReqVO bean, Long userId);
 
     AppRegionalAgentWithdrawRespVO convertApp(RegionalAgentWithdrawDO bean);
@@ -69,5 +45,9 @@ public interface RegionalAgentWithdrawConvert {
     List<AppRegionalAgentWithdrawRespVO> convertAppList(List<RegionalAgentWithdrawDO> list);
 
     PageResult<AppRegionalAgentWithdrawRespVO> convertAppPage(PageResult<RegionalAgentWithdrawDO> page);
+
+    // ========== 管理端相关 ==========
+
+    AppRegionalAgentWithdrawCreateReqVO convert(RegionalAgentWithdrawCreateReqVO bean);
 
 }

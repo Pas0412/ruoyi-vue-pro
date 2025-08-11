@@ -29,19 +29,6 @@ public interface RegionalAgentRecordConvert {
     // ========== 用户端相关 ==========
 
     @Mapping(target = "userId", source = "userId")
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "price", ignore = true)
-    @Mapping(target = "totalPrice", ignore = true)
-    @Mapping(target = "status", ignore = true)
-    @Mapping(target = "frozenTime", ignore = true)
-    @Mapping(target = "unfreezeTime", ignore = true)
-    @Mapping(target = "sourceUserLevel", ignore = true)
-    @Mapping(target = "sourceUserId", ignore = true)
-    @Mapping(target = "creator", ignore = true)
-    @Mapping(target = "createTime", ignore = true)
-    @Mapping(target = "updater", ignore = true)
-    @Mapping(target = "updateTime", ignore = true)
-    @Mapping(target = "deleted", ignore = true)
     RegionalAgentRecordPageReqVO convert(AppRegionalAgentRecordPageReqVO bean, Long userId);
 
     AppRegionalAgentRecordRespVO convertApp(RegionalAgentRecordDO bean);

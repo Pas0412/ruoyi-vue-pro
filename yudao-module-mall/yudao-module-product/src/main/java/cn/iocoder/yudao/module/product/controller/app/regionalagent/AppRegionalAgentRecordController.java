@@ -2,7 +2,7 @@ package cn.iocoder.yudao.module.product.controller.app.regionalagent;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.security.core.annotations.PreAuthenticated;
+import javax.annotation.security.PermitAll;
 import cn.iocoder.yudao.module.product.controller.app.regionalagent.vo.*;
 import cn.iocoder.yudao.module.product.convert.regionalagent.RegionalAgentRecordConvert;
 import cn.iocoder.yudao.module.product.dal.dataobject.regionalagent.RegionalAgentRecordDO;
@@ -38,7 +38,7 @@ public class AppRegionalAgentRecordController {
     @GetMapping("/get")
     @Operation(summary = "获得地区代理记录")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthenticated
+    @PermitAll
     public CommonResult<AppRegionalAgentRecordRespVO> getRegionalAgentRecord(@RequestParam("id") Long id) {
         RegionalAgentRecordDO regionalAgentRecord = regionalAgentRecordService.getRegionalAgentRecord(id);
         return success(RegionalAgentRecordConvert.INSTANCE.convertApp(regionalAgentRecord));
@@ -46,7 +46,7 @@ public class AppRegionalAgentRecordController {
 
     @GetMapping("/page")
     @Operation(summary = "获得地区代理记录分页")
-    @PreAuthenticated
+    @PermitAll
     public CommonResult<PageResult<AppRegionalAgentRecordRespVO>> getRegionalAgentRecordPage(@Valid AppRegionalAgentRecordPageReqVO pageVO) {
         PageResult<RegionalAgentRecordDO> pageResult = regionalAgentRecordService.getRegionalAgentRecordPage(RegionalAgentRecordConvert.INSTANCE.convert(pageVO, getLoginUserId()));
         return success(RegionalAgentRecordConvert.INSTANCE.convertAppPage(pageResult));

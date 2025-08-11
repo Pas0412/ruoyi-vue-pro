@@ -2,7 +2,7 @@ package cn.iocoder.yudao.module.product.controller.app.regionalagent;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.security.core.annotations.PreAuthenticated;
+
 import cn.iocoder.yudao.module.product.controller.app.regionalagent.vo.*;
 import cn.iocoder.yudao.module.product.convert.regionalagent.RegionalAgentWithdrawConvert;
 import cn.iocoder.yudao.module.product.dal.dataobject.regionalagent.RegionalAgentWithdrawDO;
@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
@@ -37,15 +38,15 @@ public class AppRegionalAgentWithdrawController {
 
     @PostMapping("/create")
     @Operation(summary = "申请提现")
-    @PreAuthenticated
+    @PermitAll
     public CommonResult<Long> createRegionalAgentWithdraw(@Valid @RequestBody AppRegionalAgentWithdrawCreateReqVO createReqVO) {
-        return success(regionalAgentWithdrawService.createRegionalAgentWithdraw(RegionalAgentWithdrawConvert.INSTANCE.convert(createReqVO, getLoginUserId())));
+        return success(regionalAgentWithdrawService.createRegionalAgentWithdraw(getLoginUserId(), createReqVO));
     }
 
     @GetMapping("/get")
     @Operation(summary = "获得地区代理提现")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthenticated
+    @PermitAll
     public CommonResult<AppRegionalAgentWithdrawRespVO> getRegionalAgentWithdraw(@RequestParam("id") Long id) {
         RegionalAgentWithdrawDO regionalAgentWithdraw = regionalAgentWithdrawService.getRegionalAgentWithdraw(id);
         return success(RegionalAgentWithdrawConvert.INSTANCE.convertApp(regionalAgentWithdraw));
@@ -53,7 +54,7 @@ public class AppRegionalAgentWithdrawController {
 
     @GetMapping("/page")
     @Operation(summary = "获得地区代理提现分页")
-    @PreAuthenticated
+    @PermitAll
     public CommonResult<PageResult<AppRegionalAgentWithdrawRespVO>> getRegionalAgentWithdrawPage(@Valid AppRegionalAgentWithdrawPageReqVO pageVO) {
         PageResult<RegionalAgentWithdrawDO> pageResult = regionalAgentWithdrawService.getRegionalAgentWithdrawPage(RegionalAgentWithdrawConvert.INSTANCE.convert(pageVO, getLoginUserId()));
         return success(RegionalAgentWithdrawConvert.INSTANCE.convertAppPage(pageResult));

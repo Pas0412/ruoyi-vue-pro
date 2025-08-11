@@ -5,8 +5,10 @@ import cn.iocoder.yudao.module.product.controller.admin.regionalagent.vo.Regiona
 import cn.iocoder.yudao.module.product.controller.admin.regionalagent.vo.RegionalAgentPageReqVO;
 import cn.iocoder.yudao.module.product.controller.admin.regionalagent.vo.RegionalAgentUpdateReqVO;
 import cn.iocoder.yudao.module.product.dal.dataobject.regionalagent.RegionalAgentDO;
+import cn.iocoder.yudao.module.product.enums.regionalagent.RegionalAgentStatusEnum;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -19,10 +21,10 @@ public interface RegionalAgentService {
     /**
      * 创建地区代理
      *
-     * @param createReqVO 创建信息
+     * @param regionalAgent 创建信息
      * @return 编号
      */
-    Long createRegionalAgent(@Valid RegionalAgentCreateReqVO createReqVO);
+    Long createRegionalAgent(@Valid RegionalAgentDO regionalAgent);
 
     /**
      * 更新地区代理
@@ -45,6 +47,14 @@ public interface RegionalAgentService {
      * @return 地区代理
      */
     RegionalAgentDO getRegionalAgent(Long id);
+
+    /**
+     * 获得地区代理列表
+     *
+     * @param ids 编号列表
+     * @return 地区代理列表
+     */
+    List<RegionalAgentDO> getRegionalAgentList(Collection<Long> ids);
 
     /**
      * 获得地区代理分页
@@ -78,6 +88,15 @@ public interface RegionalAgentService {
      * @return 代理列表
      */
     List<RegionalAgentDO> getApprovedRegionalAgentsByUserId(Long userId);
+
+    /**
+     * 根据用户编号和状态获取地区代理
+     *
+     * @param userId 用户编号
+     * @param status 代理状态
+     * @return 地区代理
+     */
+    RegionalAgentDO getRegionalAgentByUserId(Long userId, RegionalAgentStatusEnum status);
 
     /**
      * 审核地区代理申请

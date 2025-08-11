@@ -22,10 +22,12 @@ import org.springframework.validation.annotation.Validated;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.product.enums.ErrorCodeConstants.*;
+import static cn.iocoder.yudao.module.system.enums.ErrorCodeConstants.USER_NOT_EXISTS;
 
 /**
  * 地区代理 Service 实现类
@@ -44,29 +46,28 @@ public class RegionalAgentServiceImpl implements RegionalAgentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long createRegionalAgent(RegionalAgentCreateReqVO createReqVO) {
+    public Long createRegionalAgent(RegionalAgentDO regionalAgent) {
         // 校验用户存在
-        MemberUserRespDTO user = memberUserApi.getUser(createReqVO.getUserId());
+        MemberUserRespDTO user = memberUserApi.getUser(regionalAgent.getUserId());
         if (user == null) {
             throw exception(USER_NOT_EXISTS);
         }
 
         // 校验地区存在
-        Area area = AreaUtils.getArea(createReqVO.getAreaId());
+        Area area = AreaUtils.getArea(regionalAgent.getAreaId());
         if (area == null) {
             throw exception(REGIONAL_AGENT_AREA_NOT_EXISTS);
         }
 
         // 校验该用户在该地区是否已经是代理
-        RegionalAgentDO existingAgent = regionalAgentMapper.selectByUserIdAndAreaId(createReqVO.getUserId(), createReqVO.getAreaId());
+        RegionalAgentDO existingAgent = regionalAgentMapper.selectByUserIdAndAreaId(regionalAgent.getUserId(), regionalAgent.getAreaId());
         if (existingAgent != null) {
             throw exception(REGIONAL_AGENT_ALREADY_EXISTS);
         }
 
-        // 插入
-        RegionalAgentDO regionalAgent = BeanUtils.toBean(createReqVO, RegionalAgentDO.class);
+        // 设置默认值
         regionalAgent.setAreaType(area.getType());
-        regionalAgent.setAreaName(AreaUtils.format(createReqVO.getAreaId()));
+        regionalAgent.setAreaName(AreaUtils.format(regionalAgent.getAreaId()));
         regionalAgent.setStatus(RegionalAgentStatusEnum.APPLYING.getStatus());
         regionalAgent.setApplyTime(LocalDateTime.now());
         regionalAgent.setBrokeragePrice(0);
@@ -106,6 +107,11 @@ public class RegionalAgentServiceImpl implements RegionalAgentService {
     }
 
     @Override
+    public List<RegionalAgentDO> getRegionalAgentList(Collection<Long> ids) {
+        return regionalAgentMapper.selectBatchIds(ids);
+    }
+
+    @Override
     public PageResult<RegionalAgentDO> getRegionalAgentPage(RegionalAgentPageReqVO pageReqVO) {
         return regionalAgentMapper.selectPage(pageReqVO);
     }
@@ -123,6 +129,12 @@ public class RegionalAgentServiceImpl implements RegionalAgentService {
     @Override
     public List<RegionalAgentDO> getApprovedRegionalAgentsByUserId(Long userId) {
         return regionalAgentMapper.selectListByUserIdAndStatus(userId, RegionalAgentStatusEnum.APPROVED.getStatus());
+    }
+
+    @Override
+    public RegionalAgentDO getRegionalAgentByUserId(Long userId, RegionalAgentStatusEnum status) {
+        List<RegionalAgentDO> agents = regionalAgentMapper.selectListByUserIdAndStatus(userId, status.getStatus());
+        return CollUtil.isNotEmpty(agents) ? agents.get(0) : null;
     }
 
     @Override

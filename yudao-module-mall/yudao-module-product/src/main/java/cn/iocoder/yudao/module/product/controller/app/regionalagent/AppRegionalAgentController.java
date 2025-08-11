@@ -2,7 +2,8 @@ package cn.iocoder.yudao.module.product.controller.app.regionalagent;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.security.core.annotations.PreAuthenticated;
+import javax.annotation.security.PermitAll;
+import java.util.List;
 import cn.iocoder.yudao.module.product.controller.app.regionalagent.vo.*;
 import cn.iocoder.yudao.module.product.convert.regionalagent.RegionalAgentConvert;
 import cn.iocoder.yudao.module.product.dal.dataobject.regionalagent.RegionalAgentDO;
@@ -37,7 +38,7 @@ public class AppRegionalAgentController {
 
     @PostMapping("/create")
     @Operation(summary = "申请成为地区代理")
-    @PreAuthenticated
+    @PermitAll
     public CommonResult<Long> createRegionalAgent(@Valid @RequestBody AppRegionalAgentCreateReqVO createReqVO) {
         return success(regionalAgentService.createRegionalAgent(RegionalAgentConvert.INSTANCE.convert(createReqVO, getLoginUserId())));
     }
@@ -45,7 +46,7 @@ public class AppRegionalAgentController {
     @GetMapping("/get")
     @Operation(summary = "获得地区代理")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthenticated
+    @PermitAll
     public CommonResult<AppRegionalAgentRespVO> getRegionalAgent(@RequestParam("id") Long id) {
         RegionalAgentDO regionalAgent = regionalAgentService.getRegionalAgent(id);
         return success(RegionalAgentConvert.INSTANCE.convertApp(regionalAgent));
@@ -53,7 +54,7 @@ public class AppRegionalAgentController {
 
     @GetMapping("/page")
     @Operation(summary = "获得地区代理分页")
-    @PreAuthenticated
+    @PermitAll
     public CommonResult<PageResult<AppRegionalAgentRespVO>> getRegionalAgentPage(@Valid AppRegionalAgentPageReqVO pageVO) {
         PageResult<RegionalAgentDO> pageResult = regionalAgentService.getRegionalAgentPage(RegionalAgentConvert.INSTANCE.convert(pageVO, getLoginUserId()));
         return success(RegionalAgentConvert.INSTANCE.convertAppPage(pageResult));
@@ -61,10 +62,10 @@ public class AppRegionalAgentController {
 
     @GetMapping("/get-by-user")
     @Operation(summary = "根据用户获得地区代理")
-    @PreAuthenticated
-    public CommonResult<AppRegionalAgentRespVO> getRegionalAgentByUserId() {
-        RegionalAgentDO regionalAgent = regionalAgentService.getApprovedRegionalAgentByUserId(getLoginUserId());
-        return success(RegionalAgentConvert.INSTANCE.convertApp(regionalAgent));
+    @PermitAll
+    public CommonResult<List<AppRegionalAgentRespVO>> getRegionalAgentByUserId() {
+        List<RegionalAgentDO> regionalAgents = regionalAgentService.getApprovedRegionalAgentsByUserId(getLoginUserId());
+        return success(RegionalAgentConvert.INSTANCE.convertAppList(regionalAgents));
     }
 
 }

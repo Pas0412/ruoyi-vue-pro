@@ -38,32 +38,13 @@ public interface RegionalAgentConvert {
     @Mapping(target = "applyTime", ignore = true)
     @Mapping(target = "auditTime", ignore = true)
     @Mapping(target = "auditUserId", ignore = true)
-    @Mapping(target = "auditRemark", ignore = true)
+    @Mapping(target = "auditReason", ignore = true)
     @Mapping(target = "brokeragePrice", ignore = true)
     @Mapping(target = "frozenBrokeragePrice", ignore = true)
     @Mapping(target = "agentTime", ignore = true)
-    @Mapping(target = "creator", ignore = true)
-    @Mapping(target = "createTime", ignore = true)
-    @Mapping(target = "updater", ignore = true)
-    @Mapping(target = "updateTime", ignore = true)
-    @Mapping(target = "deleted", ignore = true)
     RegionalAgentDO convert(AppRegionalAgentCreateReqVO bean, Long userId);
 
     @Mapping(target = "userId", source = "userId")
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "status", ignore = true)
-    @Mapping(target = "applyTime", ignore = true)
-    @Mapping(target = "auditTime", ignore = true)
-    @Mapping(target = "auditUserId", ignore = true)
-    @Mapping(target = "auditRemark", ignore = true)
-    @Mapping(target = "brokeragePrice", ignore = true)
-    @Mapping(target = "frozenBrokeragePrice", ignore = true)
-    @Mapping(target = "agentTime", ignore = true)
-    @Mapping(target = "creator", ignore = true)
-    @Mapping(target = "createTime", ignore = true)
-    @Mapping(target = "updater", ignore = true)
-    @Mapping(target = "updateTime", ignore = true)
-    @Mapping(target = "deleted", ignore = true)
     RegionalAgentPageReqVO convert(AppRegionalAgentPageReqVO bean, Long userId);
 
     AppRegionalAgentRespVO convertApp(RegionalAgentDO bean);

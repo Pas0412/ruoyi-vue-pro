@@ -1,6 +1,6 @@
 package cn.iocoder.yudao.module.product.enums.regionalagent;
 
-import cn.iocoder.yudao.framework.common.core.IntArrayValuable;
+import cn.iocoder.yudao.framework.common.core.ArrayValuable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,7 +13,7 @@ import java.util.Arrays;
  */
 @AllArgsConstructor
 @Getter
-public enum RegionalAgentWithdrawStatusEnum implements IntArrayValuable {
+public enum RegionalAgentWithdrawStatusEnum implements ArrayValuable<Integer> {
 
     AUDITING(0, "审核中"),
     AUDIT_SUCCESS(10, "审核通过"),
@@ -21,7 +21,7 @@ public enum RegionalAgentWithdrawStatusEnum implements IntArrayValuable {
     WITHDRAW_SUCCESS(11, "提现成功"),
     WITHDRAW_FAIL(21, "提现失败");
 
-    public static final int[] ARRAYS = Arrays.stream(values()).mapToInt(RegionalAgentWithdrawStatusEnum::getStatus).toArray();
+    public static final Integer[] ARRAYS = Arrays.stream(values()).map(RegionalAgentWithdrawStatusEnum::getStatus).toArray(Integer[]::new);
 
     /**
      * 状态
@@ -33,7 +33,7 @@ public enum RegionalAgentWithdrawStatusEnum implements IntArrayValuable {
     private final String name;
 
     @Override
-    public int[] array() {
+    public Integer[] array() {
         return ARRAYS;
     }
 

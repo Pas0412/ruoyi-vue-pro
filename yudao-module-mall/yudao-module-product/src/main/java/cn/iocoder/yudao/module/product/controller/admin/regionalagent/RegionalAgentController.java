@@ -1,9 +1,10 @@
 package cn.iocoder.yudao.module.product.controller.admin.regionalagent;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
-import cn.iocoder.yudao.framework.operatelog.core.annotations.OperateLog;
+import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.module.product.controller.admin.regionalagent.vo.*;
 import cn.iocoder.yudao.module.product.convert.regionalagent.RegionalAgentConvert;
 import cn.iocoder.yudao.module.product.dal.dataobject.regionalagent.RegionalAgentDO;
@@ -23,7 +24,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
-import static cn.iocoder.yudao.framework.operatelog.core.enums.OperateTypeEnum.*;
+import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.*;
 import static cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils.getLoginUserId;
 
 @Tag(name = "管理后台 - 地区代理")
@@ -39,7 +40,7 @@ public class RegionalAgentController {
     @Operation(summary = "创建地区代理")
     @PreAuthorize("@ss.hasPermission('product:regional-agent:create')")
     public CommonResult<Long> createRegionalAgent(@Valid @RequestBody RegionalAgentCreateReqVO createReqVO) {
-        return success(regionalAgentService.createRegionalAgent(createReqVO));
+        return success(regionalAgentService.createRegionalAgent(RegionalAgentConvert.INSTANCE.convert(createReqVO)));
     }
 
     @PutMapping("/update")
@@ -88,10 +89,10 @@ public class RegionalAgentController {
     @GetMapping("/export-excel")
     @Operation(summary = "导出地区代理 Excel")
     @PreAuthorize("@ss.hasPermission('product:regional-agent:export')")
-    @OperateLog(type = EXPORT)
+    @ApiAccessLog(operateType = EXPORT)
     public void exportRegionalAgentExcel(@Valid RegionalAgentPageReqVO pageVO,
               HttpServletResponse response) throws IOException {
-        pageVO.setPageSize(PageResult.PAGE_SIZE_NONE);
+        pageVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<RegionalAgentDO> list = regionalAgentService.getRegionalAgentPage(pageVO).getList();
         // 导出 Excel
         ExcelUtils.write(response, "地区代理.xls", "数据", RegionalAgentRespVO.class,
@@ -102,7 +103,7 @@ public class RegionalAgentController {
     @Operation(summary = "审核地区代理")
     @PreAuthorize("@ss.hasPermission('product:regional-agent:approve')")
     public CommonResult<Boolean> approveRegionalAgent(@Valid @RequestBody RegionalAgentApproveReqVO approveReqVO) {
-        regionalAgentService.approveRegionalAgent(approveReqVO, getLoginUserId());
+        regionalAgentService.auditRegionalAgent(approveReqVO.getId(), approveReqVO.getStatus(), approveReqVO.getAuditRemark());
         return success(true);
     }
 

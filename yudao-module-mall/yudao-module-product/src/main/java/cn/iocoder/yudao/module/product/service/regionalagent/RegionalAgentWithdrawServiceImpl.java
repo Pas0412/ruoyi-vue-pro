@@ -4,6 +4,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.number.MoneyUtils;
 import cn.iocoder.yudao.module.product.controller.admin.regionalagent.vo.RegionalAgentWithdrawApproveReqVO;
 import cn.iocoder.yudao.module.product.controller.admin.regionalagent.vo.RegionalAgentWithdrawCreateReqVO;
+import cn.iocoder.yudao.module.product.controller.app.regionalagent.vo.AppRegionalAgentWithdrawCreateReqVO;
 import cn.iocoder.yudao.module.product.controller.admin.regionalagent.vo.RegionalAgentWithdrawPageReqVO;
 import cn.iocoder.yudao.module.product.dal.dataobject.regionalagent.RegionalAgentDO;
 import cn.iocoder.yudao.module.product.dal.dataobject.regionalagent.RegionalAgentWithdrawDO;
@@ -53,7 +54,7 @@ public class RegionalAgentWithdrawServiceImpl implements RegionalAgentWithdrawSe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long createRegionalAgentWithdraw(Long userId, RegionalAgentWithdrawCreateReqVO createReqVO) {
+    public Long createRegionalAgentWithdraw(Long userId, AppRegionalAgentWithdrawCreateReqVO createReqVO) {
         // 1. 校验用户是否为代理
         RegionalAgentDO agent = regionalAgentService.getRegionalAgentByUserId(userId, RegionalAgentStatusEnum.APPROVED);
         if (agent == null) {
@@ -100,18 +101,17 @@ public class RegionalAgentWithdrawServiceImpl implements RegionalAgentWithdrawSe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void approveRegionalAgentWithdraw(RegionalAgentWithdrawApproveReqVO approveReqVO, Long auditUserId) {
+    public void auditRegionalAgentWithdraw(Long id, Integer status, String auditReason) {
         // 1. 校验提现记录
-        RegionalAgentWithdrawDO withdraw = validateWithdrawForApprove(approveReqVO.getId());
+        RegionalAgentWithdrawDO withdraw = validateWithdrawForApprove(id);
 
         // 2. 更新提现记录
         RegionalAgentWithdrawDO updateObj = new RegionalAgentWithdrawDO();
         updateObj.setId(withdraw.getId());
         updateObj.setAuditTime(LocalDateTime.now());
-        updateObj.setAuditUserId(auditUserId);
-        updateObj.setAuditReason(approveReqVO.getAuditReason());
+        updateObj.setAuditReason(auditReason);
 
-        if (approveReqVO.getStatus().equals(RegionalAgentWithdrawStatusEnum.AUDIT_SUCCESS.getStatus())) {
+        if (status.equals(RegionalAgentWithdrawStatusEnum.AUDIT_SUCCESS.getStatus())) {
             // 审核通过
             updateObj.setStatus(RegionalAgentWithdrawStatusEnum.AUDIT_SUCCESS.getStatus());
         } else {

@@ -2,8 +2,9 @@ package cn.iocoder.yudao.module.product.controller.admin.regionalagent;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
-import cn.iocoder.yudao.framework.operatelog.core.annotations.OperateLog;
+import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.module.product.controller.admin.regionalagent.vo.RegionalAgentRecordPageReqVO;
 import cn.iocoder.yudao.module.product.controller.admin.regionalagent.vo.RegionalAgentRecordRespVO;
 import cn.iocoder.yudao.module.product.convert.regionalagent.RegionalAgentRecordConvert;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
-import static cn.iocoder.yudao.framework.operatelog.core.enums.OperateTypeEnum.EXPORT;
+import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
 
 @Tag(name = "管理后台 - 地区代理记录")
 @RestController
@@ -54,10 +55,10 @@ public class RegionalAgentRecordController {
     @GetMapping("/export-excel")
     @Operation(summary = "导出地区代理记录 Excel")
     @PreAuthorize("@ss.hasPermission('product:regional-agent-record:export')")
-    @OperateLog(type = EXPORT)
+    @ApiAccessLog(operateType = EXPORT)
     public void exportRegionalAgentRecordExcel(@Valid RegionalAgentRecordPageReqVO pageVO,
               HttpServletResponse response) throws IOException {
-        pageVO.setPageSize(PageResult.PAGE_SIZE_NONE);
+        pageVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<RegionalAgentRecordDO> list = regionalAgentRecordService.getRegionalAgentRecordPage(pageVO).getList();
         // 导出 Excel
         ExcelUtils.write(response, "地区代理记录.xls", "数据", RegionalAgentRecordRespVO.class,

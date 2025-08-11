@@ -26,7 +26,8 @@ public interface RegionalAgentMapper extends BaseMapperX<RegionalAgentDO> {
                 .eqIfPresent(RegionalAgentDO::getAreaType, reqVO.getAreaType())
                 .likeIfPresent(RegionalAgentDO::getAreaName, reqVO.getAreaName())
                 .eqIfPresent(RegionalAgentDO::getStatus, reqVO.getStatus())
-                .betweenIfPresent(RegionalAgentDO::getCreateTime, reqVO.getCreateTime())
+                .betweenIfPresent(RegionalAgentDO::getApplyTime, reqVO.getApplyTime())
+                .betweenIfPresent(RegionalAgentDO::getAuditTime, reqVO.getAuditTime())
                 .orderByDesc(RegionalAgentDO::getId));
     }
 

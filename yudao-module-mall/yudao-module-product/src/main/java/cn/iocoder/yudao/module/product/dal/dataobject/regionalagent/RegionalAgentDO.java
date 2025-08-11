@@ -5,11 +5,12 @@ import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
 /**
- * 地区代理 DO
+ * 区域代理 DO
  *
  * @author 芋道源码
  */
