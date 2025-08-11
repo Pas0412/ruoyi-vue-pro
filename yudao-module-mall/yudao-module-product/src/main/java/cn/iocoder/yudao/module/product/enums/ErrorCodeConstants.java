@@ -53,4 +53,14 @@ public interface ErrorCodeConstants {
     ErrorCode FAVORITE_EXISTS = new ErrorCode(1_008_008_000, "该商品已经被收藏");
     ErrorCode FAVORITE_NOT_EXISTS = new ErrorCode(1_008_008_001, "商品收藏不存在");
 
+    // ========== 地区代理 1-008-009-000 ==========
+    ErrorCode REGIONAL_AGENT_NOT_EXISTS = new ErrorCode(1_008_009_000, "地区代理不存在");
+    ErrorCode REGIONAL_AGENT_AREA_EXISTS = new ErrorCode(1_008_009_001, "该地区已存在代理");
+    ErrorCode REGIONAL_AGENT_USER_EXISTS = new ErrorCode(1_008_009_002, "该用户已是代理");
+    ErrorCode REGIONAL_AGENT_STATUS_NOT_APPLYING = new ErrorCode(1_008_009_003, "地区代理状态不是申请中");
+    ErrorCode REGIONAL_AGENT_WITHDRAW_NOT_EXISTS = new ErrorCode(1_008_009_004, "地区代理提现记录不存在");
+    ErrorCode REGIONAL_AGENT_WITHDRAW_STATUS_NOT_AUDITING = new ErrorCode(1_008_009_005, "地区代理提现状态不是审核中");
+    ErrorCode REGIONAL_AGENT_WITHDRAW_USER_BALANCE_NOT_ENOUGH = new ErrorCode(1_008_009_006, "用户佣金余额不足");
+    ErrorCode REGIONAL_AGENT_WITHDRAW_PRICE_ERROR = new ErrorCode(1_008_009_007, "提现金额必须大于零");
+
 }
