@@ -3,6 +3,7 @@
 -- 地区代理表
 CREATE TABLE `product_regional_agent` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `tenant_id` bigint NOT NULL DEFAULT 1 COMMENT '租户编号',
   `user_id` bigint NOT NULL COMMENT '用户编号',
   `area_id` int NOT NULL COMMENT '地区编号',
   `area_type` tinyint NOT NULL COMMENT '地区类型',
@@ -29,6 +30,7 @@ CREATE TABLE `product_regional_agent` (
 -- 地区代理记录表
 CREATE TABLE `product_regional_agent_record` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `tenant_id` bigint NOT NULL DEFAULT 1 COMMENT '租户编号',
   `user_id` bigint NOT NULL COMMENT '用户编号',
   `biz_id` varchar(64) NOT NULL COMMENT '业务编号',
   `biz_type` tinyint NOT NULL COMMENT '业务类型',
@@ -57,6 +59,7 @@ CREATE TABLE `product_regional_agent_record` (
 -- 地区代理提现表
 CREATE TABLE `product_regional_agent_withdraw` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `tenant_id` bigint NOT NULL DEFAULT 1 COMMENT '租户编号',
   `user_id` bigint NOT NULL COMMENT '用户编号',
   `price` int NOT NULL COMMENT '提现金额，单位：分',
   `fee_price` int NOT NULL DEFAULT '0' COMMENT '手续费，单位：分',
@@ -86,22 +89,26 @@ CREATE TABLE `product_regional_agent_withdraw` (
 
 -- 插入菜单权限数据
 INSERT INTO `system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parent_id`, `path`, `icon`, `component`, `component_name`, `status`, `visible`, `keep_alive`, `always_show`, `creator`, `create_time`, `updater`, `update_time`, `deleted`) VALUES
-(2700, '地区代理', '', 1, 10, 2000, 'regional-agent', 'ep:location', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2701, '地区代理管理', 'product:regional-agent:query', 2, 1, 2700, 'agent', 'ep:user', 'product/regionalagent/index', 'RegionalAgent', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2702, '地区代理查询', 'product:regional-agent:query', 3, 1, 2701, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2703, '地区代理创建', 'product:regional-agent:create', 3, 2, 2701, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2704, '地区代理更新', 'product:regional-agent:update', 3, 3, 2701, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2705, '地区代理删除', 'product:regional-agent:delete', 3, 4, 2701, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2706, '地区代理导出', 'product:regional-agent:export', 3, 5, 2701, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2707, '地区代理审核', 'product:regional-agent:approve', 3, 6, 2701, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2708, '代理记录管理', 'product:regional-agent-record:query', 2, 2, 2700, 'record', 'ep:document', 'product/regionalagent/record', 'RegionalAgentRecord', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2709, '代理记录查询', 'product:regional-agent-record:query', 3, 1, 2708, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2710, '代理记录导出', 'product:regional-agent-record:export', 3, 2, 2708, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2711, '代理提现管理', 'product:regional-agent-withdraw:query', 2, 3, 2700, 'withdraw', 'ep:money', 'product/regionalagent/withdraw', 'RegionalAgentWithdraw', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2712, '代理提现查询', 'product:regional-agent-withdraw:query', 3, 1, 2711, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2713, '代理提现创建', 'product:regional-agent-withdraw:create', 3, 2, 2711, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2714, '代理提现导出', 'product:regional-agent-withdraw:export', 3, 3, 2711, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
-(2715, '代理提现审核', 'product:regional-agent-withdraw:approve', 3, 4, 2711, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0');
+(5700, '地区代理', '', 1, 10, 2072, 'regional-agent', 'ep:location', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5701, '地区代理管理', 'product:regional-agent:query', 2, 1, 5700, 'agent', 'ep:user', 'mall/trade/regionalAgent/index', 'RegionalAgent', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5702, '地区代理查询', 'product:regional-agent:query', 3, 1, 5701, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5703, '地区代理创建', 'product:regional-agent:create', 3, 2, 5701, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5704, '地区代理更新', 'product:regional-agent:update', 3, 3, 5701, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5705, '地区代理删除', 'product:regional-agent:delete', 3, 4, 5701, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5706, '地区代理导出', 'product:regional-agent:export', 3, 5, 5701, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5707, '地区代理审核', 'product:regional-agent:approve', 3, 6, 5701, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5708, '代理记录管理', 'product:regional-agent-record:query', 2, 2, 5700, 'record', 'ep:document', 'mall/trade/regionalAgentRecord/index', 'RegionalAgentRecord', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5709, '代理记录查询', 'product:regional-agent-record:query', 3, 1, 5708, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5710, '代理记录导出', 'product:regional-agent-record:export', 3, 2, 5708, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5711, '代理提现管理', 'product:regional-agent-withdraw:query', 2, 3, 5700, 'withdraw', 'ep:money', 'mall/trade/regionalAgentWithdraw/index', 'RegionalAgentWithdraw', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5712, '代理提现查询', 'product:regional-agent-withdraw:query', 3, 1, 5711, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5713, '代理提现创建', 'product:regional-agent-withdraw:create', 3, 2, 5711, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5714, '代理提现导出', 'product:regional-agent-withdraw:export', 3, 3, 5711, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5715, '代理提现审核', 'product:regional-agent-withdraw:approve', 3, 4, 5711, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5716, '代理申请管理', 'product:regional-agent:apply', 2, 4, 5700, 'apply', 'ep:edit-pen', 'mall/trade/regionalAgentApply/index', 'RegionalAgentApply', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+
+(5717, '代理申请查询', 'product:regional-agent:apply', 3, 1, 5716, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0'),
+(5718, '代理申请创建', 'product:regional-agent:apply', 3, 2, 5716, '', '', '', '', 0, b'1', b'1', b'1', '1', '2024-01-01 00:00:00', '1', '2024-01-01 00:00:00', b'0');
 
 -- 插入字典类型
 INSERT INTO `system_dict_type` (`id`, `name`, `type`, `status`, `remark`, `creator`, `create_time`, `updater`, `update_time`, `deleted`) VALUES
