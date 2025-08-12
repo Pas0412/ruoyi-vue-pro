@@ -12,6 +12,7 @@ CREATE TABLE `product_regional_agent` (
   `apply_time` datetime NOT NULL COMMENT '申请时间',
   `audit_time` datetime DEFAULT NULL COMMENT '审核时间',
   `audit_user_id` bigint DEFAULT NULL COMMENT '审核人',
+  `audit_reason` varchar(500) DEFAULT NULL COMMENT '审核原因',
   `audit_remark` varchar(500) DEFAULT NULL COMMENT '审核备注',
   `brokerage_price` int NOT NULL DEFAULT '0' COMMENT '可用佣金，单位：分',
   `frozen_brokerage_price` int NOT NULL DEFAULT '0' COMMENT '冻结佣金，单位：分',
