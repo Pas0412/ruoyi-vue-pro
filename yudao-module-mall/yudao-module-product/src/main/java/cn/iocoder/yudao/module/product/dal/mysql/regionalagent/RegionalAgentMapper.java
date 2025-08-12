@@ -58,4 +58,10 @@ public interface RegionalAgentMapper extends BaseMapperX<RegionalAgentDO> {
     @Update("UPDATE product_regional_agent SET frozen_brokerage_price = frozen_brokerage_price - #{frozenPrice}, brokerage_price = brokerage_price + #{frozenPrice} WHERE id = #{id}")
     int updateFrozenPriceDecrAndPriceIncr(@Param("id") Long id, @Param("frozenPrice") Integer frozenPrice);
 
+    default boolean existsByUserIdAndStatusIn(Long userId, List<Integer> statusList) {
+        return selectCount(new LambdaQueryWrapperX<RegionalAgentDO>()
+                .eq(RegionalAgentDO::getUserId, userId)
+                .in(RegionalAgentDO::getStatus, statusList)) > 0;
+    }
+
 }

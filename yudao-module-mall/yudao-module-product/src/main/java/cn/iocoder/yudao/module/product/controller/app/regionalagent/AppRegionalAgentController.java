@@ -68,4 +68,12 @@ public class AppRegionalAgentController {
         return success(RegionalAgentConvert.INSTANCE.convertAppList(regionalAgents));
     }
 
+    @GetMapping("/has-applied")
+    @Operation(summary = "检验用户是否已申请地区代理")
+    @PermitAll
+    public CommonResult<Boolean> hasUserAppliedRegionalAgent() {
+        boolean hasApplied = regionalAgentService.hasUserAppliedRegionalAgent(getLoginUserId());
+        return success(hasApplied);
+    }
+
 }

@@ -140,4 +140,13 @@ public interface RegionalAgentService {
      */
     List<RegionalAgentDO> getRegionalAgentsByDeliveryArea(Integer areaId);
 
+    /**
+     * 检验用户是否已申请地区代理
+     * 只要有申请记录，且状态为申请中或已通过，就返回true
+     *
+     * @param userId 用户编号
+     * @return 是否已申请
+     */
+    boolean hasUserAppliedRegionalAgent(Long userId);
+
 }

@@ -59,10 +59,21 @@ public class RegionalAgentServiceImpl implements RegionalAgentService {
             throw exception(REGIONAL_AGENT_AREA_NOT_EXISTS);
         }
 
-        // 校验该用户在该地区是否已经是代理
+        // 校验该用户在该地区是否已经是代理（申请中或已通过状态）
         RegionalAgentDO existingAgent = regionalAgentMapper.selectByUserIdAndAreaId(regionalAgent.getUserId(), regionalAgent.getAreaId());
         if (existingAgent != null) {
-            throw exception(REGIONAL_AGENT_ALREADY_EXISTS);
+            // 如果已经是申请中或已通过状态，不允许重复申请
+            if (existingAgent.getStatus().equals(RegionalAgentStatusEnum.APPLYING.getStatus()) || 
+                existingAgent.getStatus().equals(RegionalAgentStatusEnum.APPROVED.getStatus())) {
+                throw exception(REGIONAL_AGENT_ALREADY_EXISTS);
+            }
+            // 如果是其他状态（如被拒绝），更新现有记录
+            existingAgent.setStatus(RegionalAgentStatusEnum.APPLYING.getStatus());
+            existingAgent.setApplyTime(LocalDateTime.now());
+            existingAgent.setAreaType(area.getType());
+            existingAgent.setAreaName(AreaUtils.format(regionalAgent.getAreaId()));
+            regionalAgentMapper.updateById(existingAgent);
+            return existingAgent.getId();
         }
 
         // 设置默认值
@@ -231,6 +242,15 @@ public class RegionalAgentServiceImpl implements RegionalAgentService {
         }
         
         return agents;
+    }
+
+    @Override
+    public boolean hasUserAppliedRegionalAgent(Long userId) {
+        // 检查用户是否有申请中或已通过的地区代理申请
+        List<Integer> statusList = new ArrayList<>();
+        statusList.add(RegionalAgentStatusEnum.APPLYING.getStatus()); // 申请中
+        statusList.add(RegionalAgentStatusEnum.APPROVED.getStatus()); // 已通过
+        return regionalAgentMapper.existsByUserIdAndStatusIn(userId, statusList);
     }
 
 }
