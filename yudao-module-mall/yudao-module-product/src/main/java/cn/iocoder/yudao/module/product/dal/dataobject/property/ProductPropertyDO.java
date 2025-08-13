@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 /**
  * 商品属性项 DO
  *
@@ -43,5 +45,39 @@ public class ProductPropertyDO extends BaseDO {
      * 备注
      */
     private String remark;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    // 继承自 BaseDO 的方法
+    public java.time.LocalDateTime getCreateTime() {
+        return super.getCreateTime();
+    }
+
+    public BaseDO setCreateTime(LocalDateTime createTime) {
+        super.setCreateTime(createTime);
+        return null;
+    }
 
 }

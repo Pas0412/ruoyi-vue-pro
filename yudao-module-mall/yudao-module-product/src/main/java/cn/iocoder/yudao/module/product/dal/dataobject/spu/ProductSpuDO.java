@@ -36,6 +36,34 @@ public class ProductSpuDO extends BaseDO {
     @TableId
     private Long id;
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
     // ========== 基本信息 =========
 
     /**
@@ -168,4 +196,161 @@ public class ProductSpuDO extends BaseDO {
      * 浏览量
      */
     private Integer browseCount;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Long getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(Long brandId) {
+        this.brandId = brandId;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public List<String> getSliderPicUrls() {
+        return sliderPicUrls;
+    }
+
+    public void setSliderPicUrls(List<String> sliderPicUrls) {
+        this.sliderPicUrls = sliderPicUrls;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Boolean getSpecType() {
+        return specType;
+    }
+
+    public void setSpecType(Boolean specType) {
+        this.specType = specType;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public Integer getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(Integer marketPrice) {
+        this.marketPrice = marketPrice;
+    }
+
+    public Integer getCostPrice() {
+        return costPrice;
+    }
+
+    public void setCostPrice(Integer costPrice) {
+        this.costPrice = costPrice;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public List<Integer> getDeliveryTypes() {
+        return deliveryTypes;
+    }
+
+    public void setDeliveryTypes(List<Integer> deliveryTypes) {
+        this.deliveryTypes = deliveryTypes;
+    }
+
+    public Long getDeliveryTemplateId() {
+        return deliveryTemplateId;
+    }
+
+    public void setDeliveryTemplateId(Long deliveryTemplateId) {
+        this.deliveryTemplateId = deliveryTemplateId;
+    }
+
+    public Integer getGiveIntegral() {
+        return giveIntegral;
+    }
+
+    public void setGiveIntegral(Integer giveIntegral) {
+        this.giveIntegral = giveIntegral;
+    }
+
+    public Boolean getSubCommissionType() {
+        return subCommissionType;
+    }
+
+    public void setSubCommissionType(Boolean subCommissionType) {
+        this.subCommissionType = subCommissionType;
+    }
+
+    public Integer getSalesCount() {
+        return salesCount;
+    }
+
+    public void setSalesCount(Integer salesCount) {
+        this.salesCount = salesCount;
+    }
+
+    public Integer getVirtualSalesCount() {
+        return virtualSalesCount;
+    }
+
+    public void setVirtualSalesCount(Integer virtualSalesCount) {
+        this.virtualSalesCount = virtualSalesCount;
+    }
+
+    public Integer getBrowseCount() {
+        return browseCount;
+    }
+
+    public void setBrowseCount(Integer browseCount) {
+        this.browseCount = browseCount;
+    }
+
 }

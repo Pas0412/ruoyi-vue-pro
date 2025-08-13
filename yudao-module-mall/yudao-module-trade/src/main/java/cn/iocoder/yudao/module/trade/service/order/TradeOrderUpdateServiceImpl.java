@@ -275,7 +275,10 @@ public class TradeOrderUpdateServiceImpl implements TradeOrderUpdateService {
         Long payOrderId = payOrderApi.createOrder(payOrderCreateReqDTO);
 
         // 更新到交易单上
-        tradeOrderMapper.updateById(new TradeOrderDO().setId(order.getId()).setPayOrderId(payOrderId));
+        TradeOrderDO updateOrderDO = new TradeOrderDO();
+        updateOrderDO.setId(order.getId());
+        updateOrderDO.setPayOrderId(payOrderId);
+        tradeOrderMapper.updateById(updateOrderDO);
         order.setPayOrderId(payOrderId);
     }
 
@@ -301,9 +304,12 @@ public class TradeOrderUpdateServiceImpl implements TradeOrderUpdateService {
         PayOrderRespDTO payOrder = validatePayOrderPaid(order, payOrderId);
 
         // 3. 更新 TradeOrderDO 状态为已支付，等待发货
-        int updateCount = tradeOrderMapper.updateByIdAndStatus(id, order.getStatus(),
-                new TradeOrderDO().setStatus(TradeOrderStatusEnum.UNDELIVERED.getStatus()).setPayStatus(true)
-                        .setPayTime(LocalDateTime.now()).setPayChannelCode(payOrder.getChannelCode()));
+        TradeOrderDO paidUpdateDO = new TradeOrderDO();
+        paidUpdateDO.setStatus(TradeOrderStatusEnum.UNDELIVERED.getStatus());
+        paidUpdateDO.setPayStatus(true);
+        paidUpdateDO.setPayTime(LocalDateTime.now());
+        paidUpdateDO.setPayChannelCode(payOrder.getChannelCode());
+        int updateCount = tradeOrderMapper.updateByIdAndStatus(id, order.getStatus(), paidUpdateDO);
         if (updateCount == 0) {
             throw exception(ORDER_UPDATE_PAID_STATUS_NOT_UNPAID);
         }
@@ -513,8 +519,10 @@ public class TradeOrderUpdateServiceImpl implements TradeOrderUpdateService {
     private void receiveOrder0(TradeOrderDO order) {
         // 1. 更新 TradeOrderDO 状态为已完成
         LocalDateTime receiveTime = LocalDateTime.now();
-        int updateCount = tradeOrderMapper.updateByIdAndStatus(order.getId(), order.getStatus(),
-                new TradeOrderDO().setStatus(TradeOrderStatusEnum.COMPLETED.getStatus()).setReceiveTime(receiveTime));
+        TradeOrderDO receiveUpdateDO = new TradeOrderDO();
+        receiveUpdateDO.setStatus(TradeOrderStatusEnum.COMPLETED.getStatus());
+        receiveUpdateDO.setReceiveTime(receiveTime);
+        int updateCount = tradeOrderMapper.updateByIdAndStatus(order.getId(), order.getStatus(), receiveUpdateDO);
         if (updateCount == 0) {
             throw exception(ORDER_RECEIVE_FAIL_STATUS_NOT_DELIVERED);
         }
@@ -886,8 +894,11 @@ public class TradeOrderUpdateServiceImpl implements TradeOrderUpdateService {
         // 3. 如果订单项都评论了，则更新订单评价状态
         List<TradeOrderItemDO> orderItems = tradeOrderItemMapper.selectListByOrderId(order.getId());
         if (!anyMatch(orderItems, item -> Objects.equals(item.getCommentStatus(), Boolean.FALSE))) {
-            tradeOrderMapper.updateById(new TradeOrderDO().setId(order.getId()).setCommentStatus(Boolean.TRUE)
-                    .setFinishTime(LocalDateTime.now()));
+            TradeOrderDO commentUpdateDO = new TradeOrderDO();
+            commentUpdateDO.setId(order.getId());
+            commentUpdateDO.setCommentStatus(Boolean.TRUE);
+            commentUpdateDO.setFinishTime(LocalDateTime.now());
+            tradeOrderMapper.updateById(commentUpdateDO);
             // 增加订单日志。注意：只有在所有订单项都评价后，才会增加
             TradeOrderLogUtils.setOrderInfo(order.getId(), order.getStatus(), order.getStatus());
         }
@@ -920,9 +931,12 @@ public class TradeOrderUpdateServiceImpl implements TradeOrderUpdateService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateOrderCombinationInfo(Long orderId, Long activityId, Long combinationRecordId, Long headId) {
-        tradeOrderMapper.updateById(
-                new TradeOrderDO().setId(orderId).setCombinationActivityId(activityId)
-                        .setCombinationRecordId(combinationRecordId).setCombinationHeadId(headId));
+        TradeOrderDO combinationUpdateDO = new TradeOrderDO();
+        combinationUpdateDO.setId(orderId);
+        combinationUpdateDO.setCombinationActivityId(activityId);
+        combinationUpdateDO.setCombinationRecordId(combinationRecordId);
+        combinationUpdateDO.setCombinationHeadId(headId);
+        tradeOrderMapper.updateById(combinationUpdateDO);
     }
 
     @Override
@@ -981,7 +995,10 @@ public class TradeOrderUpdateServiceImpl implements TradeOrderUpdateService {
         }
 
         // 2. 更新订单赠送的优惠券编号列表
-        tradeOrderMapper.updateById(new TradeOrderDO().setId(orderId).setGiveCouponIds(giveCouponIds));
+        TradeOrderDO giveCouponUpdateDO = new TradeOrderDO();
+        giveCouponUpdateDO.setId(orderId);
+        giveCouponUpdateDO.setGiveCouponIds(giveCouponIds);
+        tradeOrderMapper.updateById(giveCouponUpdateDO);
     }
 
     /**
@@ -1002,18 +1019,27 @@ public class TradeOrderUpdateServiceImpl implements TradeOrderUpdateService {
         // 2. 逐个评论
         for (TradeOrderItemDO orderItem : orderItems) {
             // 2.1 创建评价
-            AppTradeOrderItemCommentCreateReqVO commentCreateReqVO = new AppTradeOrderItemCommentCreateReqVO()
-                    .setOrderItemId(orderItem.getId()).setAnonymous(false).setContent("")
-                    .setBenefitScores(5).setDescriptionScores(5);
+            AppTradeOrderItemCommentCreateReqVO commentCreateReqVO = new AppTradeOrderItemCommentCreateReqVO();
+            commentCreateReqVO.setOrderItemId(orderItem.getId());
+            commentCreateReqVO.setAnonymous(false);
+            commentCreateReqVO.setContent("");
+            commentCreateReqVO.setBenefitScores(5);
+            commentCreateReqVO.setDescriptionScores(5);
             createOrderItemComment0(orderItem, commentCreateReqVO);
 
             // 2.2 更新订单项评价状态
-            tradeOrderItemMapper.updateById(new TradeOrderItemDO().setId(orderItem.getId()).setCommentStatus(Boolean.TRUE));
+            TradeOrderItemDO itemCommentUpdateDO = new TradeOrderItemDO();
+            itemCommentUpdateDO.setId(orderItem.getId());
+            itemCommentUpdateDO.setCommentStatus(Boolean.TRUE);
+            tradeOrderItemMapper.updateById(itemCommentUpdateDO);
         }
 
         // 3. 所有订单项都评论了，则更新订单评价状态
-        tradeOrderMapper.updateById(new TradeOrderDO().setId(order.getId()).setCommentStatus(Boolean.TRUE)
-                .setFinishTime(LocalDateTime.now()));
+        TradeOrderDO orderCommentUpdateDO = new TradeOrderDO();
+        orderCommentUpdateDO.setId(order.getId());
+        orderCommentUpdateDO.setCommentStatus(Boolean.TRUE);
+        orderCommentUpdateDO.setFinishTime(LocalDateTime.now());
+        tradeOrderMapper.updateById(orderCommentUpdateDO);
         // 增加订单日志。注意：只有在所有订单项都评价后，才会增加
         TradeOrderLogUtils.setOrderInfo(order.getId(), order.getStatus(), order.getStatus());
     }
@@ -1031,7 +1057,10 @@ public class TradeOrderUpdateServiceImpl implements TradeOrderUpdateService {
         Long commentId = productCommentApi.createComment(productCommentCreateReqDTO);
 
         // 2. 更新订单项评价状态
-        tradeOrderItemMapper.updateById(new TradeOrderItemDO().setId(orderItem.getId()).setCommentStatus(Boolean.TRUE));
+        TradeOrderItemDO updateOrderItem = new TradeOrderItemDO();
+        updateOrderItem.setId(orderItem.getId());
+        updateOrderItem.setCommentStatus(Boolean.TRUE);
+        tradeOrderItemMapper.updateById(updateOrderItem);
         return commentId;
     }
 

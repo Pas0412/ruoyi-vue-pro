@@ -56,4 +56,12 @@ public enum RegionalAgentStatusEnum implements ArrayValuable<Integer> {
         return APPROVED.getStatus().equals(status);
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }

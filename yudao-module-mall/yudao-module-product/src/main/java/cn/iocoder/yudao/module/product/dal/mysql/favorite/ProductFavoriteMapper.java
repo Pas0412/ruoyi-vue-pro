@@ -25,12 +25,12 @@ public interface ProductFavoriteMapper extends BaseMapperX<ProductFavoriteDO> {
 
     default PageResult<ProductFavoriteDO> selectPageByUserId(ProductFavoritePageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<ProductFavoriteDO>()
-                .eqIfPresent(ProductFavoriteDO::getUserId, reqVO.getUserId())
-                .orderByDesc(ProductFavoriteDO::getId));
+                .eqIfPresent(x -> x.getUserId(), reqVO.getUserId())
+                .orderByDesc(x -> x.getId()));
     }
 
     default Long selectCountByUserId(Long userId) {
-        return selectCount(ProductFavoriteDO::getUserId, userId);
+        return selectCount(x -> x.getUserId(), userId);
     }
 
 }

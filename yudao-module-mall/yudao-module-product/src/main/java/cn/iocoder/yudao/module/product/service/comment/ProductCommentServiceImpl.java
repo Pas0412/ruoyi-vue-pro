@@ -112,8 +112,10 @@ public class ProductCommentServiceImpl implements ProductCommentService {
         validateCommentExists(updateReqVO.getId());
 
         // 更新可见状态
-        productCommentMapper.updateById(new ProductCommentDO().setId(updateReqVO.getId())
-                .setVisible(updateReqVO.getVisible()));
+        ProductCommentDO updateObj = new ProductCommentDO();
+        updateObj.setId(updateReqVO.getId());
+        updateObj.setVisible(updateReqVO.getVisible());
+        productCommentMapper.updateById(updateObj);
     }
 
     @Override
@@ -121,9 +123,13 @@ public class ProductCommentServiceImpl implements ProductCommentService {
         // 校验评论是否存在
         validateCommentExists(replyVO.getId());
         // 回复评论
-        productCommentMapper.updateById(new ProductCommentDO().setId(replyVO.getId())
-                .setReplyTime(LocalDateTime.now()).setReplyUserId(userId)
-                .setReplyStatus(Boolean.TRUE).setReplyContent(replyVO.getReplyContent()));
+        ProductCommentDO replyObj = new ProductCommentDO();
+        replyObj.setId(replyVO.getId());
+        replyObj.setReplyTime(LocalDateTime.now());
+        replyObj.setReplyUserId(userId);
+        replyObj.setReplyStatus(Boolean.TRUE);
+        replyObj.setReplyContent(replyVO.getReplyContent());
+        productCommentMapper.updateById(replyObj);
     }
 
     private ProductCommentDO validateCommentExists(Long id) {

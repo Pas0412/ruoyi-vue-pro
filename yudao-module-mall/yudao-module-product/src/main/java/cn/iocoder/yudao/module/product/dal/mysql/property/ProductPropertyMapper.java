@@ -12,13 +12,13 @@ public interface ProductPropertyMapper extends BaseMapperX<ProductPropertyDO> {
 
     default PageResult<ProductPropertyDO> selectPage(ProductPropertyPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<ProductPropertyDO>()
-                .likeIfPresent(ProductPropertyDO::getName, reqVO.getName())
-                .betweenIfPresent(ProductPropertyDO::getCreateTime, reqVO.getCreateTime())
-                .orderByDesc(ProductPropertyDO::getId));
+                .likeIfPresent(x -> x.getName(), reqVO.getName())
+                .betweenIfPresent(x -> x.getCreateTime(), reqVO.getCreateTime())
+                .orderByDesc(x -> x.getId()));
     }
 
     default ProductPropertyDO selectByName(String name) {
-        return selectOne(ProductPropertyDO::getName, name);
+        return selectOne(x -> x.getName(), name);
     }
 
 }

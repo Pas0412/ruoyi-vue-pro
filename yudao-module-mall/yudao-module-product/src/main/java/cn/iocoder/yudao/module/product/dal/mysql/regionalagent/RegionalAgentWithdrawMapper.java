@@ -5,6 +5,7 @@ import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.module.product.controller.admin.regionalagent.vo.RegionalAgentWithdrawPageReqVO;
 import cn.iocoder.yudao.module.product.dal.dataobject.regionalagent.RegionalAgentWithdrawDO;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -22,6 +23,12 @@ public interface RegionalAgentWithdrawMapper extends BaseMapperX<RegionalAgentWi
                 .eqIfPresent(RegionalAgentWithdrawDO::getStatus, reqVO.getStatus())
                 .betweenIfPresent(RegionalAgentWithdrawDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(RegionalAgentWithdrawDO::getId));
+    }
+
+    default int updateByIdAndStatus(Long id, Integer whereStatus, RegionalAgentWithdrawDO updateObj) {
+        return update(updateObj, new LambdaUpdateWrapper<RegionalAgentWithdrawDO>()
+                .eq(RegionalAgentWithdrawDO::getId, id)
+                .eq(RegionalAgentWithdrawDO::getStatus, whereStatus));
     }
 
 }

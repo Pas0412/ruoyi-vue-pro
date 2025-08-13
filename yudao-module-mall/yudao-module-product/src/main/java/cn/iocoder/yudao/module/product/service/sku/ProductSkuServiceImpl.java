@@ -94,9 +94,11 @@ public class ProductSkuServiceImpl implements ProductSkuService {
         if (ObjectUtil.equal(specType, false)) {
             ProductSkuSaveReqVO skuVO = skus.get(0);
             List<ProductSkuSaveReqVO.Property> properties = new ArrayList<>();
-            ProductSkuSaveReqVO.Property property = new ProductSkuSaveReqVO.Property()
-                    .setPropertyId(ProductPropertyDO.ID_DEFAULT).setPropertyName(ProductPropertyDO.NAME_DEFAULT)
-                    .setValueId(ProductPropertyValueDO.ID_DEFAULT).setValueName(ProductPropertyValueDO.NAME_DEFAULT);
+            ProductSkuSaveReqVO.Property property = new ProductSkuSaveReqVO.Property();
+            property.setPropertyId(ProductPropertyDO.ID_DEFAULT);
+            property.setPropertyName(ProductPropertyDO.NAME_DEFAULT);
+            property.setValueId(ProductPropertyValueDO.ID_DEFAULT);
+            property.setValueName(ProductPropertyValueDO.NAME_DEFAULT);
             properties.add(property);
             skuVO.setProperties(properties);
             return; // 单规格不需要后续的校验

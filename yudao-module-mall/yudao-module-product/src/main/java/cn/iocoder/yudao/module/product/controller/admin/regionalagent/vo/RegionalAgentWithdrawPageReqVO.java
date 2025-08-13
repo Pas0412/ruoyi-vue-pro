@@ -26,4 +26,21 @@ public class RegionalAgentWithdrawPageReqVO extends PageParam {
     @Schema(description = "创建时间")
     private LocalDateTime[] createTime;
 
+    // 手动添加getter方法以解决Lombok编译问题
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public LocalDateTime[] getCreateTime() {
+        return createTime;
+    }
+
 }

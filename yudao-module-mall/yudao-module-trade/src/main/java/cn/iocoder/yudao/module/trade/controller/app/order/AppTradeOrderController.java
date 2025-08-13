@@ -75,7 +75,10 @@ public class AppTradeOrderController {
     @Operation(summary = "创建订单")
     public CommonResult<AppTradeOrderCreateRespVO> createOrder(@Valid @RequestBody AppTradeOrderCreateReqVO createReqVO) {
         TradeOrderDO order = tradeOrderUpdateService.createOrder(getLoginUserId(), createReqVO);
-        return success(new AppTradeOrderCreateRespVO().setId(order.getId()).setPayOrderId(order.getPayOrderId()));
+        AppTradeOrderCreateRespVO respVO = new AppTradeOrderCreateRespVO();
+        respVO.setId(order.getId());
+        respVO.setPayOrderId(order.getPayOrderId());
+        return success(respVO);
     }
 
     @PostMapping("/update-paid")

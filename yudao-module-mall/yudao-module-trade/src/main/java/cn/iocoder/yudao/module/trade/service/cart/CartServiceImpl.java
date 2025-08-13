@@ -52,13 +52,20 @@ public class CartServiceImpl implements CartService {
 
         // 情况一：存在，则进行数量更新
         if (cart != null) {
-            cartMapper.updateById(new CartDO().setId(cart.getId()).setSelected(true)
-                    .setCount(cart.getCount() + count));
+            CartDO updateCart = new CartDO();
+            updateCart.setId(cart.getId());
+            updateCart.setSelected(true);
+            updateCart.setCount(cart.getCount() + count);
+            cartMapper.updateById(updateCart);
             return cart.getId();
         // 情况二：不存在，则进行插入
         } else {
-            cart = new CartDO().setUserId(userId).setSelected(true)
-                    .setSpuId(sku.getSpuId()).setSkuId(sku.getId()).setCount(count);
+            cart = new CartDO();
+            cart.setUserId(userId);
+            cart.setSelected(true);
+            cart.setSpuId(sku.getSpuId());
+            cart.setSkuId(sku.getId());
+            cart.setCount(count);
             cartMapper.insert(cart);
         }
         return cart.getId();

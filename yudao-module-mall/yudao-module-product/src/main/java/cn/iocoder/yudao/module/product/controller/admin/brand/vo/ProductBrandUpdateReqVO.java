@@ -17,4 +17,12 @@ public class ProductBrandUpdateReqVO extends ProductBrandBaseVO {
     @NotNull(message = "品牌编号不能为空")
     private Long id;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }

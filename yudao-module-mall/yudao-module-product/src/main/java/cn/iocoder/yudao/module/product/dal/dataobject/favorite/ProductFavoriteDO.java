@@ -40,4 +40,17 @@ public class ProductFavoriteDO extends BaseDO {
      */
     private Long spuId;
 
+    // 手动添加getter方法以解决Lombok编译问题
+    public Long getId() {
+        return id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Long getSpuId() {
+        return spuId;
+    }
+
 }

@@ -84,12 +84,15 @@ public class BrokerageWithdrawServiceImpl implements BrokerageWithdrawService {
         BrokerageWithdrawDO withdraw = validateBrokerageWithdrawExists(id);
         // 1.2 特殊：【重新转账】如果是提现失败，并且状态是审核中，那么更新状态为审核中，并且清空 transferErrorMsg
         if (BrokerageWithdrawStatusEnum.WITHDRAW_FAIL.getStatus().equals(withdraw.getStatus())) {
-            int updateCount = brokerageWithdrawMapper.updateByIdAndStatus(id, withdraw.getStatus(),
-                    new BrokerageWithdrawDO().setStatus(BrokerageWithdrawStatusEnum.AUDITING.getStatus()).setTransferErrorMsg(""));
+            BrokerageWithdrawDO updateDO = new BrokerageWithdrawDO();
+            updateDO.setStatus(BrokerageWithdrawStatusEnum.AUDITING.getStatus());
+            updateDO.setTransferErrorMsg("");
+            int updateCount = brokerageWithdrawMapper.updateByIdAndStatus(id, withdraw.getStatus(), updateDO);
             if (updateCount == 0) {
                 throw exception(BROKERAGE_WITHDRAW_STATUS_NOT_AUDITING);
             }
-            withdraw.setStatus(BrokerageWithdrawStatusEnum.AUDITING.getStatus()).setTransferErrorMsg("");
+            withdraw.setStatus(BrokerageWithdrawStatusEnum.AUDITING.getStatus());
+            withdraw.setTransferErrorMsg("");
         }
         // 1.2 校验状态为审核中
         if (ObjectUtil.notEqual(BrokerageWithdrawStatusEnum.AUDITING.getStatus(), withdraw.getStatus())) {
@@ -97,8 +100,11 @@ public class BrokerageWithdrawServiceImpl implements BrokerageWithdrawService {
         }
 
         // 2. 更新状态
-        int updateCount = brokerageWithdrawMapper.updateByIdAndStatus(id, withdraw.getStatus(),
-                new BrokerageWithdrawDO().setStatus(status.getStatus()).setAuditReason(auditReason).setAuditTime(LocalDateTime.now()));
+        BrokerageWithdrawDO auditDO = new BrokerageWithdrawDO();
+        auditDO.setStatus(status.getStatus());
+        auditDO.setAuditReason(auditReason);
+        auditDO.setAuditTime(LocalDateTime.now());
+        int updateCount = brokerageWithdrawMapper.updateByIdAndStatus(id, withdraw.getStatus(), auditDO);
         if (updateCount == 0) {
             throw exception(BROKERAGE_WITHDRAW_STATUS_NOT_AUDITING);
         }

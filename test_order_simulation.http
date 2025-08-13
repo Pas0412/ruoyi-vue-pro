@@ -1,0 +1,129 @@
+### 模拟前端下单测试
+### 基础配置
+@appApi = http://127.0.0.1:48080/app-api
+@appTenantId = 1
+@appToken = test245
+
+### 1. 获取商品SPU详情 - 索尼耳机（商品ID: 633）
+GET {{appApi}}/product/spu/get-detail?id=633
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+Authorization: Bearer d6dc284ad3864414bbfca946bc6a8c3c
+
+### 2. 获取商品SPU详情 - 1分小商品（商品ID: 641）
+GET {{appApi}}/product/spu/get-detail?id=641
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+Authorization: Bearer {{appToken}}
+
+### 3. 创建用户收件地址
+POST {{appApi}}/member/address/create
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+Authorization: Bearer {{appToken}}
+
+{
+  "name": "张三",
+  "mobile": "13800138000",
+  "areaId": "110101",
+  "postCode": "100000",
+  "detailAddress": "北京市朝阳区测试街道123号",
+  "defaultStatus": true
+}
+
+### 4. 获取用户地址列表
+GET {{appApi}}/member/address/list
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+Authorization: Bearer {{appToken}}
+
+### 5. 获取订单结算信息 - 会员商品（SKU ID: 39）
+GET {{appApi}}/trade/order/settlement?items[0].skuId=39&items[0].count=1&pointStatus=false
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+Authorization: Bearer {{appToken}}
+
+### 7. 创建订单 - 会员商品（快递配送）
+POST {{appApi}}/trade/order/create
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+Authorization: Bearer {{appToken}}
+
+{
+  "items": [
+    {
+      "skuId": 39,
+      "count": 1
+    }
+  ],
+  "deliveryType": 1,
+  "addressId": 45,
+  "remark": "测试会员商品订单",
+  "pointStatus": false
+}
+
+### 9. 获取订单分页列表
+GET {{appApi}}/trade/order/page?pageNo=1&pageSize=10
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+Authorization: Bearer {{appToken}}
+
+### 10. 获取订单详情（需要替换为实际的订单ID）
+GET {{appApi}}/trade/order/get-detail?id=1
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+Authorization: Bearer {{appToken}}
+
+### 11. 提交支付订单（需要真实的支付订单ID）
+POST {{appApi}}/pay/order/submit
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+Authorization: Bearer {{appToken}}
+
+{
+  "id": 1,
+  "channelCode": "mock"
+}
+
+### 12. 测试会员商品详情（ID: 643）
+GET {{appApi}}/product/spu/get-detail?id=643
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+Authorization: Bearer {{appToken}}
+
+### 13. 测试普通商品详情（ID: 642）
+GET {{appApi}}/product/spu/get-detail?id=642
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+Authorization: Bearer {{appToken}}
+
+### 14. 添加商品到购物车
+POST {{appApi}}/trade/cart/add
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+Authorization: Bearer {{appToken}}
+
+{
+  "skuId": 39,
+  "count": 1
+}
+
+### 15. 查看购物车列表
+GET {{appApi}}/trade/cart/list
+Content-Type: application/json
+tenant-id: {{appTenantId}}
+Authorization: Bearer {{appToken}}
+
+### 测试总结 - 使用新Token: Bearer d6dc284ad3864414bbfca946bc6a8c3c
+# 1. 商品查询功能：正常
+# 2. 用户地址管理：正常
+# 3. 购物车功能：正常
+# 4. 用户认证：正常
+# 5. 订单结算：正常 (使用GET方法和查询参数格式)
+# 6. 订单创建：系统错误 (500) - 仍然存在问题
+# 7. 支付订单提交：支付订单不存在 (需要真实订单ID)
+# 
+# 新发现：
+# - 订单结算接口需要使用GET方法：/trade/order/settlement?items[0].skuId=39&items[0].count=1&pointStatus=false
+# - 订单创建接口仍然返回系统异常，可能是后端业务逻辑或数据库配置问题
+# - 支付接口路径正确：/pay/order/submit，但需要有效的支付订单ID

@@ -24,6 +24,14 @@ public class ProductSkuUpdateStockReqDTO {
     @NotNull(message = "商品 SKU 不能为空")
     private List<Item> items;
 
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
     @Data
     public static class Item {
 
@@ -41,6 +49,22 @@ public class ProductSkuUpdateStockReqDTO {
          */
         @NotNull(message = "库存变化数量不能为空")
         private Integer incrCount;
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public Integer getIncrCount() {
+            return incrCount;
+        }
+
+        public void setIncrCount(Integer incrCount) {
+            this.incrCount = incrCount;
+        }
 
     }
 

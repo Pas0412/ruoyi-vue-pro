@@ -156,4 +156,181 @@ public class ProductCommentDO extends BaseDO {
      */
     private LocalDateTime replyTime;
 
+    // 手动添加getter方法以解决Lombok编译问题
+    public Long getId() {
+        return id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getUserNickname() {
+        return userNickname;
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public Boolean getAnonymous() {
+        return anonymous;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public Long getOrderItemId() {
+        return orderItemId;
+    }
+
+    public Long getSpuId() {
+        return spuId;
+    }
+
+    public String getSpuName() {
+        return spuName;
+    }
+
+    public Long getSkuId() {
+        return skuId;
+    }
+
+    public String getSkuPicUrl() {
+        return skuPicUrl;
+    }
+
+    public List<ProductSkuDO.Property> getSkuProperties() {
+        return skuProperties;
+    }
+
+    public Boolean getVisible() {
+        return visible;
+    }
+
+    public Integer getScores() {
+        return scores;
+    }
+
+    public Integer getDescriptionScores() {
+        return descriptionScores;
+    }
+
+    public Integer getBenefitScores() {
+        return benefitScores;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public List<String> getPicUrls() {
+        return picUrls;
+    }
+
+    public Boolean getReplyStatus() {
+        return replyStatus;
+    }
+
+    public Long getReplyUserId() {
+        return replyUserId;
+    }
+
+    public String getReplyContent() {
+        return replyContent;
+    }
+
+    public LocalDateTime getReplyTime() {
+        return replyTime;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
+    }
+
+    public void setAnonymous(Boolean anonymous) {
+        this.anonymous = anonymous;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setOrderItemId(Long orderItemId) {
+        this.orderItemId = orderItemId;
+    }
+
+    public void setSpuId(Long spuId) {
+        this.spuId = spuId;
+    }
+
+    public void setSpuName(String spuName) {
+        this.spuName = spuName;
+    }
+
+    public void setSkuId(Long skuId) {
+        this.skuId = skuId;
+    }
+
+    public void setSkuPicUrl(String skuPicUrl) {
+        this.skuPicUrl = skuPicUrl;
+    }
+
+    public void setSkuProperties(List<ProductSkuDO.Property> skuProperties) {
+        this.skuProperties = skuProperties;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
+    }
+
+    public void setScores(Integer scores) {
+        this.scores = scores;
+    }
+
+    public void setDescriptionScores(Integer descriptionScores) {
+        this.descriptionScores = descriptionScores;
+    }
+
+    public void setBenefitScores(Integer benefitScores) {
+        this.benefitScores = benefitScores;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setPicUrls(List<String> picUrls) {
+        this.picUrls = picUrls;
+    }
+
+    public void setReplyStatus(Boolean replyStatus) {
+        this.replyStatus = replyStatus;
+    }
+
+    public void setReplyUserId(Long replyUserId) {
+        this.replyUserId = replyUserId;
+    }
+
+    public void setReplyContent(String replyContent) {
+        this.replyContent = replyContent;
+    }
+
+    public void setReplyTime(LocalDateTime replyTime) {
+        this.replyTime = replyTime;
+    }
+
 }

@@ -1,7 +1,6 @@
 package cn.iocoder.yudao.module.product.enums.regionalagent;
 
 import cn.iocoder.yudao.framework.common.core.ArrayValuable;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -11,7 +10,6 @@ import java.util.Arrays;
  *
  * @author 芋道源码
  */
-@AllArgsConstructor
 @Getter
 public enum RegionalAgentWithdrawTypeEnum implements ArrayValuable<Integer> {
 
@@ -19,8 +17,6 @@ public enum RegionalAgentWithdrawTypeEnum implements ArrayValuable<Integer> {
     BANK(2, "银行卡"),
     WECHAT(3, "微信"),
     ALIPAY(4, "支付宝");
-
-    public static final Integer[] ARRAYS = Arrays.stream(values()).map(RegionalAgentWithdrawTypeEnum::getType).toArray(Integer[]::new);
 
     /**
      * 类型
@@ -31,9 +27,25 @@ public enum RegionalAgentWithdrawTypeEnum implements ArrayValuable<Integer> {
      */
     private final String name;
 
+    RegionalAgentWithdrawTypeEnum(Integer type, String name) {
+        this.type = type;
+        this.name = name;
+    }
+
+    public static final Integer[] ARRAYS = Arrays.stream(values()).map(RegionalAgentWithdrawTypeEnum::getType).toArray(Integer[]::new);
+
+
     @Override
     public Integer[] array() {
         return ARRAYS;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

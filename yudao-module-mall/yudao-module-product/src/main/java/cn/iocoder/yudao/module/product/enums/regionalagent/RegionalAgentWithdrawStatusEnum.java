@@ -1,7 +1,6 @@
 package cn.iocoder.yudao.module.product.enums.regionalagent;
 
 import cn.iocoder.yudao.framework.common.core.ArrayValuable;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -11,7 +10,6 @@ import java.util.Arrays;
  *
  * @author 芋道源码
  */
-@AllArgsConstructor
 @Getter
 public enum RegionalAgentWithdrawStatusEnum implements ArrayValuable<Integer> {
 
@@ -32,9 +30,22 @@ public enum RegionalAgentWithdrawStatusEnum implements ArrayValuable<Integer> {
      */
     private final String name;
 
+    RegionalAgentWithdrawStatusEnum(Integer status, String name) {
+        this.status = status;
+        this.name = name;
+    }
+
     @Override
     public Integer[] array() {
         return ARRAYS;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

@@ -35,4 +35,12 @@ public enum RegionalAgentRecordStatusEnum implements ArrayValuable<Integer> {
         return ARRAYS;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }

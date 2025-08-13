@@ -36,4 +36,12 @@ public enum RegionalAgentRecordBizTypeEnum implements ArrayValuable<Integer> {
         return ARRAYS;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }

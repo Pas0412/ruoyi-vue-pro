@@ -88,14 +88,22 @@ public interface TradeOrderConvert {
     TradeOrderItemDO convert(TradePriceCalculateRespBO.OrderItem item);
 
     default ProductSkuUpdateStockReqDTO convert(List<TradeOrderItemDO> list) {
-        List<ProductSkuUpdateStockReqDTO.Item> items = CollectionUtils.convertList(list, item ->
-                new ProductSkuUpdateStockReqDTO.Item().setId(item.getSkuId()).setIncrCount(item.getCount()));
+        List<ProductSkuUpdateStockReqDTO.Item> items = CollectionUtils.convertList(list, item -> {
+            ProductSkuUpdateStockReqDTO.Item stockItem = new ProductSkuUpdateStockReqDTO.Item();
+            stockItem.setId(item.getSkuId());
+            stockItem.setIncrCount(item.getCount());
+            return stockItem;
+        });
         return new ProductSkuUpdateStockReqDTO(items);
     }
 
     default ProductSkuUpdateStockReqDTO convertNegative(List<TradeOrderItemDO> list) {
-        List<ProductSkuUpdateStockReqDTO.Item> items = CollectionUtils.convertList(list, item ->
-                new ProductSkuUpdateStockReqDTO.Item().setId(item.getSkuId()).setIncrCount(-item.getCount()));
+        List<ProductSkuUpdateStockReqDTO.Item> items = CollectionUtils.convertList(list, item -> {
+            ProductSkuUpdateStockReqDTO.Item stockItem = new ProductSkuUpdateStockReqDTO.Item();
+            stockItem.setId(item.getSkuId());
+            stockItem.setIncrCount(-item.getCount());
+            return stockItem;
+        });
         return new ProductSkuUpdateStockReqDTO(items);
     }
 
@@ -228,8 +236,11 @@ public interface TradeOrderConvert {
         for (AppTradeOrderSettlementReqVO.Item item : settlementReqVO.getItems()) {
             // 情况一：skuId + count
             if (item.getSkuId() != null) {
-                reqBO.getItems().add(new TradePriceCalculateReqBO.Item().setSkuId(item.getSkuId()).setCount(item.getCount())
-                        .setSelected(true)); // true 的原因，下单一定选中
+                TradePriceCalculateReqBO.Item priceItem = new TradePriceCalculateReqBO.Item();
+                priceItem.setSkuId(item.getSkuId());
+                priceItem.setCount(item.getCount());
+                priceItem.setSelected(true); // true 的原因，下单一定选中
+                reqBO.getItems().add(priceItem);
                 continue;
             }
             // 情况二：cartId
@@ -237,8 +248,12 @@ public interface TradeOrderConvert {
             if (cart == null) {
                 continue;
             }
-            reqBO.getItems().add(new TradePriceCalculateReqBO.Item().setSkuId(cart.getSkuId()).setCount(cart.getCount())
-                    .setCartId(item.getCartId()).setSelected(true)); // true 的原因，下单一定选中
+            TradePriceCalculateReqBO.Item cartItem = new TradePriceCalculateReqBO.Item();
+            cartItem.setSkuId(cart.getSkuId());
+            cartItem.setCount(cart.getCount());
+            cartItem.setCartId(item.getCartId());
+            cartItem.setSelected(true); // true 的原因，下单一定选中
+            reqBO.getItems().add(cartItem);
         }
         return reqBO;
     }
@@ -263,12 +278,16 @@ public interface TradeOrderConvert {
 
     default BrokerageAddReqBO convert(MemberUserRespDTO user, TradeOrderItemDO item,
                                       ProductSpuRespDTO spu, ProductSkuRespDTO sku) {
-        BrokerageAddReqBO bo = new BrokerageAddReqBO().setBizId(String.valueOf(item.getId())).setSourceUserId(item.getUserId())
-                .setBasePrice(item.getPayPrice())
-                .setTitle(StrUtil.format("{}成功购买{}", user.getNickname(), item.getSpuName()))
-                .setFirstFixedPrice(0).setSecondFixedPrice(0);
+        BrokerageAddReqBO bo = new BrokerageAddReqBO();
+        bo.setBizId(String.valueOf(item.getId()));
+        bo.setSourceUserId(item.getUserId());
+        bo.setBasePrice(item.getPayPrice());
+        bo.setTitle(StrUtil.format("{}成功购买{}", user.getNickname(), item.getSpuName()));
+        bo.setFirstFixedPrice(0);
+        bo.setSecondFixedPrice(0);
         if (BooleanUtil.isTrue(spu.getSubCommissionType())) {
-            bo.setFirstFixedPrice(sku.getFirstBrokeragePrice()).setSecondFixedPrice(sku.getSecondBrokeragePrice());
+            bo.setFirstFixedPrice(sku.getFirstBrokeragePrice());
+            bo.setSecondFixedPrice(sku.getSecondBrokeragePrice());
         }
         return bo;
     }

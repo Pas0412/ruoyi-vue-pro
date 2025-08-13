@@ -93,4 +93,156 @@ public class ProductSpuSaveReqVO {
     @Valid
     private List<ProductSkuSaveReqVO> skus;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Long getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(Long brandId) {
+        this.brandId = brandId;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public List<String> getSliderPicUrls() {
+        return sliderPicUrls;
+    }
+
+    public void setSliderPicUrls(List<String> sliderPicUrls) {
+        this.sliderPicUrls = sliderPicUrls;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public Boolean getSpecType() {
+        return specType;
+    }
+
+    public void setSpecType(Boolean specType) {
+        this.specType = specType;
+    }
+
+    public List<Integer> getDeliveryTypes() {
+        return deliveryTypes;
+    }
+
+    public void setDeliveryTypes(List<Integer> deliveryTypes) {
+        this.deliveryTypes = deliveryTypes;
+    }
+
+    public Long getDeliveryTemplateId() {
+        return deliveryTemplateId;
+    }
+
+    public void setDeliveryTemplateId(Long deliveryTemplateId) {
+        this.deliveryTemplateId = deliveryTemplateId;
+    }
+
+    public Integer getGiveIntegral() {
+        return giveIntegral;
+    }
+
+    public void setGiveIntegral(Integer giveIntegral) {
+        this.giveIntegral = giveIntegral;
+    }
+
+    public Boolean getSubCommissionType() {
+        return subCommissionType;
+    }
+
+    public void setSubCommissionType(Boolean subCommissionType) {
+        this.subCommissionType = subCommissionType;
+    }
+
+    public Integer getVirtualSalesCount() {
+        return virtualSalesCount;
+    }
+
+    public void setVirtualSalesCount(Integer virtualSalesCount) {
+        this.virtualSalesCount = virtualSalesCount;
+    }
+
+    public Integer getSalesCount() {
+        return salesCount;
+    }
+
+    public void setSalesCount(Integer salesCount) {
+        this.salesCount = salesCount;
+    }
+
+    public Integer getBrowseCount() {
+        return browseCount;
+    }
+
+    public void setBrowseCount(Integer browseCount) {
+        this.browseCount = browseCount;
+    }
+
+    public List<ProductSkuSaveReqVO> getSkus() {
+        return skus;
+    }
+
+    public void setSkus(List<ProductSkuSaveReqVO> skus) {
+        this.skus = skus;
+    }
+
 }

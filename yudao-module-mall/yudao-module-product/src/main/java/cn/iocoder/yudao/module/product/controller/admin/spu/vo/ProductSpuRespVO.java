@@ -90,6 +90,10 @@ public class ProductSpuRespVO {
     @Schema(description = "SKU 数组")
     private List<ProductSkuRespVO> skus;
 
+    public void setSkus(List<ProductSkuRespVO> skus) {
+        this.skus = skus;
+    }
+
     // ========== 物流相关字段 =========
 
     @Schema(description = "配送方式数组", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")

@@ -96,4 +96,188 @@ public class RegionalAgentWithdrawDO extends BaseDO {
      */
     private String remark;
 
+    // ========== 转账相关字段 ==========
+
+    /**
+     * 转账单编号
+     *
+     * 关联 PayTransferRespDTO 的 id 字段
+     */
+    private Long payTransferId;
+    /**
+     * 转账渠道
+     *
+     * 枚举 {@link cn.iocoder.yudao.framework.pay.core.enums.channel.PayChannelEnum}
+     */
+    private String transferChannelCode;
+    /**
+     * 转账成功时间
+     */
+    private LocalDateTime transferTime;
+    /**
+     * 转账错误提示
+     */
+    private String transferErrorMsg;
+
+    // 手动添加getter方法以解决Lombok编译问题
+    public Long getId() {
+        return id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public Integer getFeePrice() {
+        return feePrice;
+    }
+
+    public Integer getTotalPrice() {
+        return totalPrice;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAccountNo() {
+        return accountNo;
+    }
+
+    public String getAccountQrCodeUrl() {
+        return accountQrCodeUrl;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public String getBankAddress() {
+        return bankAddress;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public String getAuditReason() {
+        return auditReason;
+    }
+
+    public LocalDateTime getAuditTime() {
+        return auditTime;
+    }
+
+    public Long getAuditUserId() {
+        return auditUserId;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public Long getPayTransferId() {
+        return payTransferId;
+    }
+
+    public String getTransferChannelCode() {
+        return transferChannelCode;
+    }
+
+    public LocalDateTime getTransferTime() {
+        return transferTime;
+    }
+
+    public String getTransferErrorMsg() {
+        return transferErrorMsg;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public void setFeePrice(Integer feePrice) {
+        this.feePrice = feePrice;
+    }
+
+    public void setTotalPrice(Integer totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
+    }
+
+    public void setAccountQrCodeUrl(String accountQrCodeUrl) {
+        this.accountQrCodeUrl = accountQrCodeUrl;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public void setBankAddress(String bankAddress) {
+        this.bankAddress = bankAddress;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public void setAuditReason(String auditReason) {
+        this.auditReason = auditReason;
+    }
+
+    public void setAuditTime(LocalDateTime auditTime) {
+        this.auditTime = auditTime;
+    }
+
+    public void setAuditUserId(Long auditUserId) {
+        this.auditUserId = auditUserId;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public void setPayTransferId(Long payTransferId) {
+        this.payTransferId = payTransferId;
+    }
+
+    public void setTransferChannelCode(String transferChannelCode) {
+        this.transferChannelCode = transferChannelCode;
+    }
+
+    public void setTransferTime(LocalDateTime transferTime) {
+        this.transferTime = transferTime;
+    }
+
+    public void setTransferErrorMsg(String transferErrorMsg) {
+        this.transferErrorMsg = transferErrorMsg;
+    }
+
 }

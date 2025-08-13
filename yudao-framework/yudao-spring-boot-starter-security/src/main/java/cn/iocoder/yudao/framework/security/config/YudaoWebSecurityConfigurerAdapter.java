@@ -38,11 +38,14 @@ import java.util.Set;
 
 import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertList;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 自定义的 Spring Security 配置适配器实现
  *
  * @author 芋道源码
  */
+@Slf4j
 @AutoConfiguration
 @AutoConfigureOrder(-1) // 目的：先于 Spring Security 自动配置，避免一键改包后，org.* 基础包无法生效
 @EnableMethodSecurity(securedEnabled = true)
@@ -192,6 +195,7 @@ public class YudaoWebSecurityConfigurerAdapter {
             }
             // 根据请求方法，添加到 result 结果
             entry.getKey().getMethodsCondition().getMethods().forEach(requestMethod -> {
+                log.info("[DEBUG] Adding @PermitAll URLs: " + requestMethod + " -> " + urls);
                 switch (requestMethod) {
                     case GET:
                         result.putAll(HttpMethod.GET, urls);

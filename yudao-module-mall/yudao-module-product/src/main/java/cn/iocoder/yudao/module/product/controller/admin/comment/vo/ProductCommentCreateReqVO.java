@@ -46,4 +46,76 @@ public class ProductCommentCreateReqVO {
     @Size(max = 9, message = "评论图片地址数组长度不能超过 9 张")
     private List<String> picUrls;
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getOrderItemId() {
+        return orderItemId;
+    }
+
+    public void setOrderItemId(Long orderItemId) {
+        this.orderItemId = orderItemId;
+    }
+
+    public String getUserNickname() {
+        return userNickname;
+    }
+
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
+    }
+
+    public Long getSkuId() {
+        return skuId;
+    }
+
+    public void setSkuId(Long skuId) {
+        this.skuId = skuId;
+    }
+
+    public Integer getDescriptionScores() {
+        return descriptionScores;
+    }
+
+    public void setDescriptionScores(Integer descriptionScores) {
+        this.descriptionScores = descriptionScores;
+    }
+
+    public Integer getBenefitScores() {
+        return benefitScores;
+    }
+
+    public void setBenefitScores(Integer benefitScores) {
+        this.benefitScores = benefitScores;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public List<String> getPicUrls() {
+        return picUrls;
+    }
+
+    public void setPicUrls(List<String> picUrls) {
+        this.picUrls = picUrls;
+    }
+
 }

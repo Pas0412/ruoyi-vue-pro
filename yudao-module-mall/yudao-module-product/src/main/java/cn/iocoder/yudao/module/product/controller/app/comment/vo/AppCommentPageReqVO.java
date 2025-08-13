@@ -35,4 +35,13 @@ public class AppCommentPageReqVO extends PageParam {
     @NotNull(message = "商品 SPU 编号不能为空")
     private Integer type;
 
+    // 手动添加getter方法以解决Lombok编译问题
+    public Long getSpuId() {
+        return spuId;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
 }

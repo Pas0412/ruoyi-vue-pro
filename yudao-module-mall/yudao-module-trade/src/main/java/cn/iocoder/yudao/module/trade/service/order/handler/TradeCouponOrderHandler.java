@@ -38,8 +38,11 @@ public class TradeCouponOrderHandler implements TradeOrderHandler {
             return;
         }
         // 不在前置扣减的原因，是因为优惠劵要记录使用的订单号
-        couponApi.useCoupon(new CouponUseReqDTO().setId(order.getCouponId()).setUserId(order.getUserId())
-                .setOrderId(order.getId()));
+        CouponUseReqDTO couponUseReqDTO = new CouponUseReqDTO();
+        couponUseReqDTO.setId(order.getCouponId());
+        couponUseReqDTO.setUserId(order.getUserId());
+        couponUseReqDTO.setOrderId(order.getId());
+        couponApi.useCoupon(couponUseReqDTO);
     }
 
     @Override

@@ -44,4 +44,68 @@ public class AppRegionalAgentWithdrawCreateReqVO {
     @Schema(description = "备注", example = "提现申请")
     private String remark;
 
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAccountNo() {
+        return accountNo;
+    }
+
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
+    }
+
+    public String getAccountQrCodeUrl() {
+        return accountQrCodeUrl;
+    }
+
+    public void setAccountQrCodeUrl(String accountQrCodeUrl) {
+        this.accountQrCodeUrl = accountQrCodeUrl;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBankAddress() {
+        return bankAddress;
+    }
+
+    public void setBankAddress(String bankAddress) {
+        this.bankAddress = bankAddress;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
 }

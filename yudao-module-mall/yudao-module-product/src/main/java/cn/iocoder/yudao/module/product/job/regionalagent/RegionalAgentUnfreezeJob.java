@@ -4,6 +4,8 @@ import cn.iocoder.yudao.framework.quartz.core.handler.JobHandler;
 import cn.iocoder.yudao.framework.tenant.core.job.TenantJob;
 import cn.iocoder.yudao.module.product.service.regionalagent.RegionalAgentRecordService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -14,8 +16,9 @@ import javax.annotation.Resource;
  * @author 芋道源码
  */
 @Component
-@Slf4j
 public class RegionalAgentUnfreezeJob implements JobHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(RegionalAgentUnfreezeJob.class);
 
     @Resource
     private RegionalAgentRecordService regionalAgentRecordService;

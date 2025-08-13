@@ -58,4 +58,76 @@ public class ProductCommentCreateReqDTO {
     @NotNull(message = "评价人不能为空")
     private Long userId;
 
+    public Long getSkuId() {
+        return skuId;
+    }
+
+    public void setSkuId(Long skuId) {
+        this.skuId = skuId;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public Long getOrderItemId() {
+        return orderItemId;
+    }
+
+    public void setOrderItemId(Long orderItemId) {
+        this.orderItemId = orderItemId;
+    }
+
+    public Integer getDescriptionScores() {
+        return descriptionScores;
+    }
+
+    public void setDescriptionScores(Integer descriptionScores) {
+        this.descriptionScores = descriptionScores;
+    }
+
+    public Integer getBenefitScores() {
+        return benefitScores;
+    }
+
+    public void setBenefitScores(Integer benefitScores) {
+        this.benefitScores = benefitScores;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public List<String> getPicUrls() {
+        return picUrls;
+    }
+
+    public void setPicUrls(List<String> picUrls) {
+        this.picUrls = picUrls;
+    }
+
+    public Boolean getAnonymous() {
+        return anonymous;
+    }
+
+    public void setAnonymous(Boolean anonymous) {
+        this.anonymous = anonymous;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
 }

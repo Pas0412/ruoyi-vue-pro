@@ -21,4 +21,17 @@ public class ProductPropertyValuePageReqVO extends PageParam {
     @Schema(description = "状态", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
     private Integer status;
 
+    // 手动添加getter方法以解决Lombok编译问题
+    public String getPropertyId() {
+        return propertyId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
 }

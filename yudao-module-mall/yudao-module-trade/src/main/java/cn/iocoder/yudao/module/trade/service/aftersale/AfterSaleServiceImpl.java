@@ -201,8 +201,11 @@ public class AfterSaleServiceImpl implements AfterSaleService {
         // 情况二：退货退款：需要等用户退货后，才能发起退款
         Integer newStatus = afterSale.getWay().equals(AfterSaleWayEnum.REFUND.getWay()) ?
                 AfterSaleStatusEnum.WAIT_REFUND.getStatus() : AfterSaleStatusEnum.SELLER_AGREE.getStatus();
-        updateAfterSaleStatus(afterSale.getId(), AfterSaleStatusEnum.APPLY.getStatus(), new AfterSaleDO()
-                .setStatus(newStatus).setAuditUserId(userId).setAuditTime(LocalDateTime.now()));
+        AfterSaleDO updateDO = new AfterSaleDO();
+        updateDO.setStatus(newStatus);
+        updateDO.setAuditUserId(userId);
+        updateDO.setAuditTime(LocalDateTime.now());
+        updateAfterSaleStatus(afterSale.getId(), AfterSaleStatusEnum.APPLY.getStatus(), updateDO);
 
         // 记录售后日志
         AfterSaleLogUtils.setAfterSaleInfo(afterSale.getId(), afterSale.getStatus(), newStatus);
@@ -217,9 +220,12 @@ public class AfterSaleServiceImpl implements AfterSaleService {
 
         // 更新售后单的状态
         Integer newStatus = AfterSaleStatusEnum.SELLER_DISAGREE.getStatus();
-        updateAfterSaleStatus(afterSale.getId(), AfterSaleStatusEnum.APPLY.getStatus(), new AfterSaleDO()
-                .setStatus(newStatus).setAuditUserId(userId).setAuditTime(LocalDateTime.now())
-                .setAuditReason(auditReqVO.getAuditReason()));
+        AfterSaleDO disagreeUpdateDO = new AfterSaleDO();
+        disagreeUpdateDO.setStatus(newStatus);
+        disagreeUpdateDO.setAuditUserId(userId);
+        disagreeUpdateDO.setAuditTime(LocalDateTime.now());
+        disagreeUpdateDO.setAuditReason(auditReqVO.getAuditReason());
+        updateAfterSaleStatus(afterSale.getId(), AfterSaleStatusEnum.APPLY.getStatus(), disagreeUpdateDO);
 
         // 记录售后日志
         AfterSaleLogUtils.setAfterSaleInfo(afterSale.getId(), afterSale.getStatus(), newStatus);
@@ -362,13 +368,17 @@ public class AfterSaleServiceImpl implements AfterSaleService {
 
     private void createPayRefund(String userIp, AfterSaleDO afterSale) {
         // 创建退款单
-        PayRefundCreateReqDTO createReqDTO = AfterSaleConvert.INSTANCE.convert(userIp, afterSale, tradeOrderProperties)
-                .setUserId(afterSale.getUserId()).setUserType(UserTypeEnum.MEMBER.getValue())
-                .setReason(StrUtil.format("退款【{}】", afterSale.getSpuName()));
+        PayRefundCreateReqDTO createReqDTO = AfterSaleConvert.INSTANCE.convert(userIp, afterSale, tradeOrderProperties);
+        createReqDTO.setUserId(afterSale.getUserId());
+        createReqDTO.setUserType(UserTypeEnum.MEMBER.getValue());
+        createReqDTO.setReason(StrUtil.format("退款【{}】", afterSale.getSpuName()));
         Long payRefundId = payRefundApi.createRefund(createReqDTO);
 
         // 更新售后单的退款单号
-        tradeAfterSaleMapper.updateById(new AfterSaleDO().setId(afterSale.getId()).setPayRefundId(payRefundId));
+        AfterSaleDO updateRefundDO = new AfterSaleDO();
+        updateRefundDO.setId(afterSale.getId());
+        updateRefundDO.setPayRefundId(payRefundId);
+        tradeAfterSaleMapper.updateById(updateRefundDO);
     }
 
     @Override

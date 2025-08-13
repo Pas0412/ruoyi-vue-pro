@@ -39,4 +39,37 @@ public class ProductBrowseHistoryDO extends BaseDO {
      */
     private Boolean userDeleted;
 
+    // 手动添加getter方法以解决Lombok编译问题
+    public Long getId() {
+        return id;
+    }
+
+    public Long getSpuId() {
+        return spuId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Boolean getUserDeleted() {
+        return userDeleted;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setSpuId(Long spuId) {
+        this.spuId = spuId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setUserDeleted(Boolean userDeleted) {
+        this.userDeleted = userDeleted;
+    }
+
 }

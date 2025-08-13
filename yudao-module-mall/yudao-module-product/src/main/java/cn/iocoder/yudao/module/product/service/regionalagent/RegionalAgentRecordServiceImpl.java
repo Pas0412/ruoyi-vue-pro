@@ -38,6 +38,8 @@ import static cn.iocoder.yudao.module.product.enums.ErrorCodeConstants.REGIONAL_
 @Validated
 public class RegionalAgentRecordServiceImpl implements RegionalAgentRecordService {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RegionalAgentRecordServiceImpl.class);
+
     @Resource
     private RegionalAgentRecordMapper regionalAgentRecordMapper;
     @Resource
@@ -107,7 +109,7 @@ public class RegionalAgentRecordServiceImpl implements RegionalAgentRecordServic
         record.setTotalPrice(agent.getBrokeragePrice() + agent.getFrozenBrokeragePrice() + brokeragePrice);
         record.setStatus(RegionalAgentRecordStatusEnum.WAIT_SETTLEMENT.getStatus());
         record.setFrozenTime(LocalDateTime.now());
-        record.setUnfreezeTime(LocalDateTime.now().plusDays(7)); // 7天后解冻
+        record.setUnfreezeTime(LocalDateTime.now().plusDays(30)); // 30天后解冻
         record.setSourceUserId(sourceUserId);
         record.setSourceUserLevel(sourceUserLevel);
         regionalAgentRecordMapper.insert(record);
@@ -127,7 +129,8 @@ public class RegionalAgentRecordServiceImpl implements RegionalAgentRecordServic
 
         records.forEach(record -> {
             // 1. 更新佣金记录为已失效
-            RegionalAgentRecordDO updateObj = new RegionalAgentRecordDO().setStatus(RegionalAgentRecordStatusEnum.CANCEL.getStatus());
+            RegionalAgentRecordDO updateObj = new RegionalAgentRecordDO();
+            updateObj.setStatus(RegionalAgentRecordStatusEnum.CANCEL.getStatus());
             int updateRows = regionalAgentRecordMapper.updateByIdAndStatus(record.getId(), record.getStatus(), updateObj);
             if (updateRows == 0) {
                 log.error("[cancelRegionalAgentBrokerage][record({}) 更新为已失效失败]", record.getId());
@@ -177,7 +180,8 @@ public class RegionalAgentRecordServiceImpl implements RegionalAgentRecordServic
     @Transactional(rollbackFor = Exception.class)
     public boolean unfreezeRecord(RegionalAgentRecordDO record) {
         // 更新记录状态为已结算
-        RegionalAgentRecordDO updateObj = new RegionalAgentRecordDO().setStatus(RegionalAgentRecordStatusEnum.SETTLEMENT.getStatus());
+        RegionalAgentRecordDO updateObj = new RegionalAgentRecordDO();
+        updateObj.setStatus(RegionalAgentRecordStatusEnum.SETTLEMENT.getStatus());
         int updateRows = regionalAgentRecordMapper.updateByIdAndStatus(record.getId(), 
                 RegionalAgentRecordStatusEnum.WAIT_SETTLEMENT.getStatus(), updateObj);
         if (updateRows == 0) {
@@ -219,11 +223,11 @@ public class RegionalAgentRecordServiceImpl implements RegionalAgentRecordServic
         // 根据地区类型设置不同的佣金比例
         double rate = 0.0;
         if (areaType.equals(4)) { // 县级代理
-            rate = 0.05; // 5%
+            rate = 0.20; // 20%
         } else if (areaType.equals(3)) { // 市级代理
-            rate = 0.03; // 3%
+            rate = 0.15; // 15%
         } else if (areaType.equals(2)) { // 省级代理
-            rate = 0.02; // 2%
+            rate = 0.10; // 10%
         }
         
         return MoneyUtils.calculateRatePriceFloor(basePrice, rate);

@@ -1,7 +1,6 @@
 package cn.iocoder.yudao.module.product.enums.comment;
 
 import cn.iocoder.yudao.framework.common.core.ArrayValuable;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -12,7 +11,6 @@ import java.util.Arrays;
  * @author wangzhs
  */
 @Getter
-@AllArgsConstructor
 public enum ProductCommentScoresEnum implements ArrayValuable<Integer> {
 
     ONE(1, "1星"),
@@ -21,7 +19,7 @@ public enum ProductCommentScoresEnum implements ArrayValuable<Integer> {
     FOUR(4, "4星"),
     FIVE(5, "5星");
 
-    public static final Integer[] ARRAYS = Arrays.stream(values()).map(ProductCommentScoresEnum::getScores).toArray(Integer[]::new);
+    public static final Integer[] ARRAYS = Arrays.stream(values()).map(item -> item.getScores()).toArray(Integer[]::new);
 
     /**
      * 星级
@@ -32,6 +30,19 @@ public enum ProductCommentScoresEnum implements ArrayValuable<Integer> {
      * 星级名
      */
     private final String name;
+
+    ProductCommentScoresEnum(Integer scores, String name) {
+        this.scores = scores;
+        this.name = name;
+    }
+
+    public Integer getScores() {
+        return scores;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     @Override
     public Integer[] array() {

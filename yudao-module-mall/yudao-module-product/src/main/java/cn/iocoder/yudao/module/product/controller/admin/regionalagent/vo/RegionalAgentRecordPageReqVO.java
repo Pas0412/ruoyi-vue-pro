@@ -29,4 +29,25 @@ public class RegionalAgentRecordPageReqVO extends PageParam {
     @Schema(description = "创建时间")
     private LocalDateTime[] createTime;
 
+    // 手动添加getter方法以解决Lombok编译问题
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getBizId() {
+        return bizId;
+    }
+
+    public Integer getBizType() {
+        return bizType;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public LocalDateTime[] getCreateTime() {
+        return createTime;
+    }
+
 }

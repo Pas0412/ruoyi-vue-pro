@@ -20,8 +20,13 @@ public interface TradeOrderItemMapper extends BaseMapperX<TradeOrderItemDO> {
 
     default int updateAfterSaleStatus(Long id, Integer oldAfterSaleStatus, Integer newAfterSaleStatus,
                                       Long afterSaleId) {
-        return update(new TradeOrderItemDO().setAfterSaleStatus(newAfterSaleStatus).setAfterSaleId(afterSaleId),
-                new LambdaUpdateWrapper<>(new TradeOrderItemDO().setId(id).setAfterSaleStatus(oldAfterSaleStatus)));
+        TradeOrderItemDO updateDO = new TradeOrderItemDO();
+        updateDO.setAfterSaleStatus(newAfterSaleStatus);
+        updateDO.setAfterSaleId(afterSaleId);
+        TradeOrderItemDO conditionDO = new TradeOrderItemDO();
+        conditionDO.setId(id);
+        conditionDO.setAfterSaleStatus(oldAfterSaleStatus);
+        return update(updateDO, new LambdaUpdateWrapper<>(conditionDO));
     }
 
     default List<TradeOrderItemDO> selectListByOrderId(Long orderId) {

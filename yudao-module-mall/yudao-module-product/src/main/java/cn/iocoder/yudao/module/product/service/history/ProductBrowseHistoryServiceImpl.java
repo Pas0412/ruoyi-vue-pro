@@ -47,9 +47,9 @@ public class ProductBrowseHistoryServiceImpl implements ProductBrowseHistoryServ
         }
 
         // 插入
-        ProductBrowseHistoryDO browseHistory = new ProductBrowseHistoryDO()
-                .setUserId(userId)
-                .setSpuId(spuId);
+        ProductBrowseHistoryDO browseHistory = new ProductBrowseHistoryDO();
+        browseHistory.setUserId(userId);
+        browseHistory.setSpuId(spuId);
         browseHistoryMapper.insert(browseHistory);
     }
 

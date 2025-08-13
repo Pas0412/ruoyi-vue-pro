@@ -129,15 +129,19 @@ public class TradeOrderQueryServiceImpl implements TradeOrderQueryService {
         // 查询每个售后状态对应的数量、金额
         List<Map<String, Object>> list = tradeOrderMapper.selectOrderSummaryGroupByRefundStatus(reqVO, userIds);
 
-        TradeOrderSummaryRespVO vo = new TradeOrderSummaryRespVO().setAfterSaleCount(0L).setAfterSalePrice(0L);
+        TradeOrderSummaryRespVO vo = new TradeOrderSummaryRespVO();
+        vo.setAfterSaleCount(0L);
+        vo.setAfterSalePrice(0L);
         for (Map<String, Object> map : list) {
             Long count = MapUtil.getLong(map, "count", 0L);
             Long price = MapUtil.getLong(map, "price", 0L);
             // 未退款的计入订单，部分退款、全部退款计入售后
             if (TradeOrderRefundStatusEnum.NONE.getStatus().equals(MapUtil.getInt(map, "refundStatus"))) {
-                vo.setOrderCount(count).setOrderPayPrice(price);
+                vo.setOrderCount(count);
+                vo.setOrderPayPrice(price);
             } else {
-                vo.setAfterSaleCount(vo.getAfterSaleCount() + count).setAfterSalePrice(vo.getAfterSalePrice() + price);
+                vo.setAfterSaleCount(vo.getAfterSaleCount() + count);
+                vo.setAfterSalePrice(vo.getAfterSalePrice() + price);
             }
         }
         return vo;

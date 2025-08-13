@@ -28,4 +28,44 @@ public class RegionalAgentUpdateReqVO {
     @Schema(description = "审核备注", example = "审核通过")
     private String auditRemark;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Integer areaId) {
+        this.areaId = areaId;
+    }
+
+    public Integer getAreaType() {
+        return areaType;
+    }
+
+    public void setAreaType(Integer areaType) {
+        this.areaType = areaType;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
+    public String getAuditRemark() {
+        return auditRemark;
+    }
+
+    public void setAuditRemark(String auditRemark) {
+        this.auditRemark = auditRemark;
+    }
+
 }

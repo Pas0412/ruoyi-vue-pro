@@ -87,7 +87,8 @@ public class ProductSpuServiceImpl implements ProductSpuService {
         productSkuService.validateSkuList(skuSaveReqList, updateReqVO.getSpecType());
 
         // 更新 SPU
-        ProductSpuDO updateObj = BeanUtils.toBean(updateReqVO, ProductSpuDO.class).setStatus(spu.getStatus());
+        ProductSpuDO updateObj = BeanUtils.toBean(updateReqVO, ProductSpuDO.class);
+        updateObj.setStatus(spu.getStatus());
         initSpuFromSkus(updateObj, skuSaveReqList);
         productSpuMapper.updateById(updateObj);
         // 批量更新 SKU
@@ -223,14 +224,18 @@ public class ProductSpuServiceImpl implements ProductSpuService {
         Set<Long> categoryIds = new HashSet<>();
         if (pageReqVO.getCategoryId() != null && pageReqVO.getCategoryId() > 0) {
             categoryIds.add(pageReqVO.getCategoryId());
-            List<ProductCategoryDO> categoryChildren = categoryService.getCategoryList(new ProductCategoryListReqVO()
-                    .setStatus(CommonStatusEnum.ENABLE.getStatus()).setParentId(pageReqVO.getCategoryId()));
+            ProductCategoryListReqVO categoryReqVO1 = new ProductCategoryListReqVO();
+            categoryReqVO1.setStatus(CommonStatusEnum.ENABLE.getStatus());
+            categoryReqVO1.setParentId(pageReqVO.getCategoryId());
+            List<ProductCategoryDO> categoryChildren = categoryService.getCategoryList(categoryReqVO1);
             categoryIds.addAll(convertList(categoryChildren, ProductCategoryDO::getId));
         }
         if (CollUtil.isNotEmpty(pageReqVO.getCategoryIds())) {
             categoryIds.addAll(pageReqVO.getCategoryIds());
-            List<ProductCategoryDO> categoryChildren = categoryService.getCategoryList(new ProductCategoryListReqVO()
-                    .setStatus(CommonStatusEnum.ENABLE.getStatus()).setParentIds(pageReqVO.getCategoryIds()));
+            ProductCategoryListReqVO categoryReqVO2 = new ProductCategoryListReqVO();
+            categoryReqVO2.setStatus(CommonStatusEnum.ENABLE.getStatus());
+            categoryReqVO2.setParentIds(pageReqVO.getCategoryIds());
+            List<ProductCategoryDO> categoryChildren = categoryService.getCategoryList(categoryReqVO2);
             categoryIds.addAll(convertList(categoryChildren, ProductCategoryDO::getId));
         }
         // 分页查询
@@ -251,7 +256,8 @@ public class ProductSpuServiceImpl implements ProductSpuService {
         // TODO 芋艿：【可选】参与活动中的商品，不允许下架？？？
 
         // 更新状态
-        ProductSpuDO productSpuDO = productSpuMapper.selectById(updateReqVO.getId()).setStatus(updateReqVO.getStatus());
+        ProductSpuDO productSpuDO = productSpuMapper.selectById(updateReqVO.getId());
+        productSpuDO.setStatus(updateReqVO.getStatus());
         productSpuMapper.updateById(productSpuDO);
     }
 

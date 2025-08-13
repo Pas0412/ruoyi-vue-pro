@@ -55,4 +55,20 @@ public class ProductSpuPageReqVO extends PageParam {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private LocalDateTime[] createTime;
 
+    public Integer getTabType() {
+        return tabType;
+    }
+
+    public LocalDateTime[] getCreateTime() {
+        return createTime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
 }

@@ -21,4 +21,36 @@ public class ProductCategoryListReqVO {
     @Schema(description = "父分类编号数组", example = "1,2,3")
     private Collection<Long> parentIds;
 
+    public String getName() {
+        return name;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public Collection<Long> getParentIds() {
+        return parentIds;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public void setParentIds(Collection<Long> parentIds) {
+        this.parentIds = parentIds;
+    }
+
 }

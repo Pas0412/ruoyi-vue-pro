@@ -25,29 +25,36 @@ public interface ProductCommentConvert {
 
     default ProductCommentDO convert(ProductCommentCreateReqDTO createReqDTO,
                                      ProductSpuDO spu, ProductSkuDO sku, MemberUserRespDTO user) {
-        ProductCommentDO comment = BeanUtils.toBean(createReqDTO, ProductCommentDO.class)
-                .setScores(convertScores(createReqDTO.getDescriptionScores(), createReqDTO.getBenefitScores()));
+        ProductCommentDO comment = BeanUtils.toBean(createReqDTO, ProductCommentDO.class);
         if (user != null) {
-            comment.setUserId(user.getId()).setUserNickname(user.getNickname()).setUserAvatar(user.getAvatar());
+            comment.setUserId(user.getId());
+            comment.setUserNickname(user.getNickname());
+            comment.setUserAvatar(user.getAvatar());
         }
         if (spu != null) {
-            comment.setSpuId(spu.getId()).setSpuName(spu.getName());
+            comment.setSpuId(spu.getId());
+            comment.setSpuName(spu.getName());
         }
         if (sku != null) {
-            comment.setSkuPicUrl(sku.getPicUrl()).setSkuProperties(sku.getProperties());
+            comment.setSkuPicUrl(sku.getPicUrl());
+            comment.setSkuProperties(sku.getProperties());
         }
         return comment;
     }
 
     default ProductCommentDO convert(ProductCommentCreateReqVO createReq, ProductSpuDO spu, ProductSkuDO sku) {
-        ProductCommentDO comment = BeanUtils.toBean(createReq, ProductCommentDO.class)
-                .setVisible(true).setUserId(0L).setAnonymous(false)
-                .setScores(convertScores(createReq.getDescriptionScores(), createReq.getBenefitScores()));
+        ProductCommentDO comment = BeanUtils.toBean(createReq, ProductCommentDO.class);
+        comment.setVisible(true);
+        comment.setUserId(0L);
+        comment.setAnonymous(false);
+        comment.setScores(convertScores(createReq.getDescriptionScores(), createReq.getBenefitScores()));
         if (spu != null) {
-            comment.setSpuId(spu.getId()).setSpuName(spu.getName());
+            comment.setSpuId(spu.getId());
+            comment.setSpuName(spu.getName());
         }
         if (sku != null) {
-            comment.setSkuPicUrl(sku.getPicUrl()).setSkuProperties(sku.getProperties());
+            comment.setSkuPicUrl(sku.getPicUrl());
+            comment.setSkuProperties(sku.getProperties());
         }
         return comment;
     }

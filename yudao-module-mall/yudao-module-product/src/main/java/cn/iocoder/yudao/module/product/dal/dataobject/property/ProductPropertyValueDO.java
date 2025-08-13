@@ -52,4 +52,21 @@ public class ProductPropertyValueDO extends BaseDO {
      */
     private String remark;
 
+    // 手动添加getter方法以解决Lombok编译问题
+    public Long getId() {
+        return id;
+    }
+
+    public Long getPropertyId() {
+        return propertyId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
 }

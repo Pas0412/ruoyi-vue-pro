@@ -42,4 +42,33 @@ public class ProductCommentPageReqVO extends PageParam {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private LocalDateTime[] createTime;
 
+    // 手动添加getter方法以解决Lombok编译问题
+    public String getUserNickname() {
+        return userNickname;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public Long getSpuId() {
+        return spuId;
+    }
+
+    public String getSpuName() {
+        return spuName;
+    }
+
+    public Integer getScores() {
+        return scores;
+    }
+
+    public Boolean getReplyStatus() {
+        return replyStatus;
+    }
+
+    public LocalDateTime[] getCreateTime() {
+        return createTime;
+    }
+
 }

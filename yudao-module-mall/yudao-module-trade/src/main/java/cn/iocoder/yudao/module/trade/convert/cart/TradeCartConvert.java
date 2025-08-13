@@ -45,7 +45,10 @@ public interface TradeCartConvert {
                 validList.add(cartVO);
             }
         });
-        return new AppCartListRespVO().setValidList(validList).setInvalidList(invalidList);
+        AppCartListRespVO respVO = new AppCartListRespVO();
+        respVO.setValidList(validList);
+        respVO.setInvalidList(invalidList);
+        return respVO;
     }
 
 }

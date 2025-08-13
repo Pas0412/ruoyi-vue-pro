@@ -30,4 +30,21 @@ public class ProductBrowseHistoryPageReqVO extends SortablePageParam {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private LocalDateTime[] createTime;
 
+    // 手动添加getter方法以解决Lombok编译问题
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Boolean getUserDeleted() {
+        return userDeleted;
+    }
+
+    public Long getSpuId() {
+        return spuId;
+    }
+
+    public LocalDateTime[] getCreateTime() {
+        return createTime;
+    }
+
 }

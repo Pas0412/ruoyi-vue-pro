@@ -39,6 +39,18 @@ public class ProductSkuDO extends BaseDO {
      * 关联 {@link ProductSpuDO#getId()}
      */
     private Long spuId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getSpuId() {
+        return spuId;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
     /**
      * 属性数组，JSON 格式
      */
@@ -128,6 +140,138 @@ public class ProductSkuDO extends BaseDO {
          */
         private String valueName;
 
+        public Long getPropertyId() {
+            return propertyId;
+        }
+
+        public void setPropertyId(Long propertyId) {
+            this.propertyId = propertyId;
+        }
+
+        public String getPropertyName() {
+            return propertyName;
+        }
+
+        public void setPropertyName(String propertyName) {
+            this.propertyName = propertyName;
+        }
+
+        public Long getValueId() {
+            return valueId;
+        }
+
+        public void setValueId(Long valueId) {
+            this.valueId = valueId;
+        }
+
+        public String getValueName() {
+            return valueName;
+        }
+
+        public void setValueName(String valueName) {
+            this.valueName = valueName;
+        }
+
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setSpuId(Long spuId) {
+        this.spuId = spuId;
+    }
+
+    public List<Property> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(List<Property> properties) {
+        this.properties = properties;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public Integer getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(Integer marketPrice) {
+        this.marketPrice = marketPrice;
+    }
+
+    public Integer getCostPrice() {
+        return costPrice;
+    }
+
+    public void setCostPrice(Integer costPrice) {
+        this.costPrice = costPrice;
+    }
+
+    public String getBarCode() {
+        return barCode;
+    }
+
+    public void setBarCode(String barCode) {
+        this.barCode = barCode;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public Double getVolume() {
+        return volume;
+    }
+
+    public void setVolume(Double volume) {
+        this.volume = volume;
+    }
+
+    public Integer getFirstBrokeragePrice() {
+        return firstBrokeragePrice;
+    }
+
+    public void setFirstBrokeragePrice(Integer firstBrokeragePrice) {
+        this.firstBrokeragePrice = firstBrokeragePrice;
+    }
+
+    public Integer getSecondBrokeragePrice() {
+        return secondBrokeragePrice;
+    }
+
+    public void setSecondBrokeragePrice(Integer secondBrokeragePrice) {
+        this.secondBrokeragePrice = secondBrokeragePrice;
+    }
+
+    public Integer getSalesCount() {
+        return salesCount;
+    }
+
+    public void setSalesCount(Integer salesCount) {
+        this.salesCount = salesCount;
     }
 
 }

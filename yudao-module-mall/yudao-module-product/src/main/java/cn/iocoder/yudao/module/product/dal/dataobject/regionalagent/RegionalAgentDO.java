@@ -89,4 +89,109 @@ public class RegionalAgentDO extends BaseDO {
      */
     private LocalDateTime agentTime;
 
+    // 手动添加getter方法以解决Lombok编译问题
+    public Long getId() {
+        return id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Integer getAreaId() {
+        return areaId;
+    }
+
+    public Integer getAreaType() {
+        return areaType;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getApplyTime() {
+        return applyTime;
+    }
+
+    public LocalDateTime getAuditTime() {
+        return auditTime;
+    }
+
+    public Long getAuditUserId() {
+        return auditUserId;
+    }
+
+    public String getAuditReason() {
+        return auditReason;
+    }
+
+    public Integer getBrokeragePrice() {
+        return brokeragePrice;
+    }
+
+    public Integer getFrozenBrokeragePrice() {
+        return frozenBrokeragePrice;
+    }
+
+    public LocalDateTime getAgentTime() {
+        return agentTime;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setAreaId(Integer areaId) {
+        this.areaId = areaId;
+    }
+
+    public void setAreaType(Integer areaType) {
+        this.areaType = areaType;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public void setApplyTime(LocalDateTime applyTime) {
+        this.applyTime = applyTime;
+    }
+
+    public void setAuditTime(LocalDateTime auditTime) {
+        this.auditTime = auditTime;
+    }
+
+    public void setAuditUserId(Long auditUserId) {
+        this.auditUserId = auditUserId;
+    }
+
+    public void setAuditReason(String auditReason) {
+        this.auditReason = auditReason;
+    }
+
+    public void setBrokeragePrice(Integer brokeragePrice) {
+        this.brokeragePrice = brokeragePrice;
+    }
+
+    public void setFrozenBrokeragePrice(Integer frozenBrokeragePrice) {
+        this.frozenBrokeragePrice = frozenBrokeragePrice;
+    }
+
+    public void setAgentTime(LocalDateTime agentTime) {
+        this.agentTime = agentTime;
+    }
+
 }

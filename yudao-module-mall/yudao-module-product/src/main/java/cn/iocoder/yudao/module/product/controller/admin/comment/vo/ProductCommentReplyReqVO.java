@@ -20,4 +20,20 @@ public class ProductCommentReplyReqVO {
     @NotEmpty(message = "商家回复内容不能为空")
     private String replyContent;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getReplyContent() {
+        return replyContent;
+    }
+
+    public void setReplyContent(String replyContent) {
+        this.replyContent = replyContent;
+    }
+
 }

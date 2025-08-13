@@ -92,4 +92,109 @@ public class RegionalAgentRecordDO extends BaseDO {
      */
     private Long sourceUserId;
 
+    // 手动添加getter方法以解决Lombok编译问题
+    public Long getId() {
+        return id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getBizId() {
+        return bizId;
+    }
+
+    public Integer getBizType() {
+        return bizType;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public Integer getTotalPrice() {
+        return totalPrice;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getFrozenTime() {
+        return frozenTime;
+    }
+
+    public LocalDateTime getUnfreezeTime() {
+        return unfreezeTime;
+    }
+
+    public Integer getSourceUserLevel() {
+        return sourceUserLevel;
+    }
+
+    public Long getSourceUserId() {
+        return sourceUserId;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setBizId(String bizId) {
+        this.bizId = bizId;
+    }
+
+    public void setBizType(Integer bizType) {
+        this.bizType = bizType;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public void setTotalPrice(Integer totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public void setFrozenTime(LocalDateTime frozenTime) {
+        this.frozenTime = frozenTime;
+    }
+
+    public void setUnfreezeTime(LocalDateTime unfreezeTime) {
+        this.unfreezeTime = unfreezeTime;
+    }
+
+    public void setSourceUserLevel(Integer sourceUserLevel) {
+        this.sourceUserLevel = sourceUserLevel;
+    }
+
+    public void setSourceUserId(Long sourceUserId) {
+        this.sourceUserId = sourceUserId;
+    }
+
 }

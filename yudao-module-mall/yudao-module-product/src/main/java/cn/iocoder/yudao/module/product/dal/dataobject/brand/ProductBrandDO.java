@@ -50,4 +50,16 @@ public class ProductBrandDO extends BaseDO {
      */
     private Integer status;
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
 }

@@ -35,4 +35,33 @@ public class RegionalAgentPageReqVO extends PageParam {
     @Schema(description = "审核时间")
     private LocalDateTime[] auditTime;
 
+    // 手动添加getter方法以解决Lombok编译问题
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Integer getAreaId() {
+        return areaId;
+    }
+
+    public Integer getAreaType() {
+        return areaType;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public LocalDateTime[] getApplyTime() {
+        return applyTime;
+    }
+
+    public LocalDateTime[] getAuditTime() {
+        return auditTime;
+    }
+
 }

@@ -48,4 +48,52 @@ public class AppProductSpuPageReqVO extends PageParam {
         return StrUtil.equalsAny(sortField, SORT_FIELD_PRICE, SORT_FIELD_SALES_COUNT);
     }
 
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public String getSortField() {
+        return sortField;
+    }
+
+    public Boolean getSortAsc() {
+        return sortAsc;
+    }
+
+    public List<Long> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Long> ids) {
+        this.ids = ids;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public List<Long> getCategoryIds() {
+        return categoryIds;
+    }
+
+    public void setCategoryIds(List<Long> categoryIds) {
+        this.categoryIds = categoryIds;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
+    }
+
+    public void setSortAsc(Boolean sortAsc) {
+        this.sortAsc = sortAsc;
+    }
+
 }

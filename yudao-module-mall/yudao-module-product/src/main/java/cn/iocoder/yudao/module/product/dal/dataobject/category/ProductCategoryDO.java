@@ -61,4 +61,20 @@ public class ProductCategoryDO extends BaseDO {
      */
     private Integer status;
 
+    public Long getId() {
+        return id;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
 }
