@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -36,17 +37,17 @@ public class RegionalAgentWithdrawDO extends BaseDO {
      */
     private Long userId;
     /**
-     * 提现金额，单位：分
+     * 提现金额，单位：元
      */
-    private Integer price;
+    private BigDecimal price;
     /**
-     * 手续费，单位：分
+     * 手续费，单位：元
      */
-    private Integer feePrice;
+    private BigDecimal feePrice;
     /**
-     * 当前总佣金，单位：分
+     * 当前总佣金，单位：元
      */
-    private Integer totalPrice;
+    private BigDecimal totalPrice;
     /**
      * 提现类型
      *
@@ -107,7 +108,7 @@ public class RegionalAgentWithdrawDO extends BaseDO {
     /**
      * 转账渠道
      *
-     * 枚举 {@link cn.iocoder.yudao.framework.pay.core.enums.channel.PayChannelEnum}
+
      */
     private String transferChannelCode;
     /**
@@ -128,15 +129,15 @@ public class RegionalAgentWithdrawDO extends BaseDO {
         return userId;
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public Integer getFeePrice() {
+    public BigDecimal getFeePrice() {
         return feePrice;
     }
 
-    public Integer getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
@@ -208,15 +209,15 @@ public class RegionalAgentWithdrawDO extends BaseDO {
         this.userId = userId;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public void setFeePrice(Integer feePrice) {
+    public void setFeePrice(BigDecimal feePrice) {
         this.feePrice = feePrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 

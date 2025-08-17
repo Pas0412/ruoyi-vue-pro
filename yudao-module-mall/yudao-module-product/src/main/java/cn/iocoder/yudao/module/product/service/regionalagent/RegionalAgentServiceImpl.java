@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -81,8 +82,8 @@ public class RegionalAgentServiceImpl implements RegionalAgentService {
         regionalAgent.setAreaName(AreaUtils.format(regionalAgent.getAreaId()));
         regionalAgent.setStatus(RegionalAgentStatusEnum.APPLYING.getStatus());
         regionalAgent.setApplyTime(LocalDateTime.now());
-        regionalAgent.setBrokeragePrice(0);
-        regionalAgent.setFrozenBrokeragePrice(0);
+        regionalAgent.setBrokeragePrice(BigDecimal.ZERO);
+        regionalAgent.setFrozenBrokeragePrice(BigDecimal.ZERO);
         regionalAgentMapper.insert(regionalAgent);
         return regionalAgent.getId();
     }
@@ -174,24 +175,24 @@ public class RegionalAgentServiceImpl implements RegionalAgentService {
     }
 
     @Override
-    public boolean updateAgentPrice(Long id, Integer price) {
-        if (price == 0) {
+    public boolean updateAgentPrice(Long id, BigDecimal price) {
+        if (price.compareTo(BigDecimal.ZERO) == 0) {
             return true;
         }
         return regionalAgentMapper.updateBrokeragePrice(id, price) > 0;
     }
 
     @Override
-    public void updateAgentFrozenPrice(Long id, Integer frozenPrice) {
-        if (frozenPrice != 0) {
+    public void updateAgentFrozenPrice(Long id, BigDecimal frozenPrice) {
+        if (frozenPrice.compareTo(BigDecimal.ZERO) != 0) {
             regionalAgentMapper.updateFrozenBrokeragePrice(id, frozenPrice);
         }
     }
 
     @Override
-    public void updateFrozenPriceDecrAndPriceIncr(Long id, Integer frozenPrice) {
-        if (frozenPrice > 0) {
-            regionalAgentMapper.updateFrozenPriceDecrAndPriceIncr(id, frozenPrice);
+    public void updateFrozenPriceDecrAndPriceIncr(Long id, BigDecimal frozenPrice, BigDecimal price) {
+        if (frozenPrice.compareTo(BigDecimal.ZERO) > 0) {
+            regionalAgentMapper.updateFrozenPriceDecrAndPriceIncr(id, frozenPrice, price);
         }
     }
 

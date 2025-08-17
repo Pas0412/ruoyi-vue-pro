@@ -33,6 +33,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
@@ -86,23 +88,24 @@ public class RegionalAgentWithdrawServiceImpl implements RegionalAgentWithdrawSe
         }
 
         // 2. 校验提现金额
-        if (createReqVO.getPrice() <= 0) {
+        BigDecimal priceInYuan = createReqVO.getPrice().divide(BigDecimal.valueOf(100));
+        if (priceInYuan.compareTo(BigDecimal.ZERO) <= 0) {
             throw exception(REGIONAL_AGENT_WITHDRAW_PRICE_ERROR);
         }
-        if (createReqVO.getPrice() > agent.getBrokeragePrice()) {
+        if (priceInYuan.compareTo(agent.getBrokeragePrice()) > 0) {
             throw exception(REGIONAL_AGENT_WITHDRAW_USER_BALANCE_NOT_ENOUGH);
         }
 
         // 3. 计算手续费
-        Integer feePrice = calculateFeePrice(createReqVO.getPrice(), createReqVO.getType());
-        Integer totalPrice = createReqVO.getPrice() + feePrice;
+        //BigDecimal feePriceInYuan = calculateFeePriceInYuan(createReqVO.getPrice(), createReqVO.getType());
+        BigDecimal totalPriceInYuan = priceInYuan;
 
         // 4. 创建提现记录
         RegionalAgentWithdrawDO withdraw = new RegionalAgentWithdrawDO();
         withdraw.setUserId(userId);
-        withdraw.setPrice(createReqVO.getPrice());
-        withdraw.setFeePrice(feePrice);
-        withdraw.setTotalPrice(totalPrice);
+        withdraw.setPrice(priceInYuan);
+        withdraw.setFeePrice(totalPriceInYuan);
+        withdraw.setTotalPrice(totalPriceInYuan);
         withdraw.setType(createReqVO.getType());
         withdraw.setName(createReqVO.getName());
         withdraw.setAccountNo(createReqVO.getAccountNo());
@@ -114,11 +117,11 @@ public class RegionalAgentWithdrawServiceImpl implements RegionalAgentWithdrawSe
         regionalAgentWithdrawMapper.insert(withdraw);
 
         // 5. 扣减代理可用佣金
-        regionalAgentService.updateAgentPrice(agent.getId(), -totalPrice);
+        regionalAgentService.updateAgentPrice(agent.getId(), totalPriceInYuan.negate());
 
         // 6. 记录佣金变动
         regionalAgentRecordService.addRegionalAgentBrokerage(agent.getId(), RegionalAgentRecordBizTypeEnum.WITHDRAW,
-                String.valueOf(withdraw.getId()), -totalPrice, "提现申请");
+                String.valueOf(withdraw.getId()), totalPriceInYuan.negate(), "提现申请");
 
         return withdraw.getId();
     }
@@ -288,6 +291,31 @@ public class RegionalAgentWithdrawServiceImpl implements RegionalAgentWithdrawSe
         }
         
         return MoneyUtils.calculateRatePriceFloor(price, feeRate);
+    }
+
+    /**
+     * 计算手续费（元）
+     *
+     * @param price 提现金额（分）
+     * @param type  提现类型
+     * @return 手续费（元）
+     */
+    private BigDecimal calculateFeePriceInYuan(Integer price, Integer type) {
+        // 根据提现类型计算手续费
+        BigDecimal feeRate = BigDecimal.ZERO;
+        if (RegionalAgentWithdrawTypeEnum.WALLET.getType().equals(type)) {
+            feeRate = BigDecimal.ZERO; // 钱包提现免手续费
+        } else if (RegionalAgentWithdrawTypeEnum.BANK.getType().equals(type)) {
+            feeRate = new BigDecimal("0.005"); // 银行卡提现 0.5% 手续费
+        } else if (RegionalAgentWithdrawTypeEnum.WECHAT.getType().equals(type)) {
+            feeRate = new BigDecimal("0.003"); // 微信提现 0.3% 手续费
+        } else if (RegionalAgentWithdrawTypeEnum.ALIPAY.getType().equals(type)) {
+            feeRate = new BigDecimal("0.003"); // 支付宝提现 0.3% 手续费
+        }
+        
+        // 将分转换为元，计算手续费，保留1位小数
+        BigDecimal priceInYuan = BigDecimal.valueOf(price).divide(BigDecimal.valueOf(100));
+        return priceInYuan.multiply(feeRate).setScale(1, RoundingMode.DOWN);
     }
 
 }

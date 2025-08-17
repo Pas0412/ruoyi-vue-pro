@@ -36,6 +36,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
 import javax.validation.Validator;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
@@ -155,7 +156,7 @@ public class BrokerageWithdrawServiceImpl implements BrokerageWithdrawService {
         // 1.2 构建请求
         PayTransferCreateReqDTO transferReqDTO = new PayTransferCreateReqDTO()
                 .setAppKey(tradeOrderProperties.getPayAppKey()).setChannelCode(channelCode)
-                .setMerchantTransferId(withdraw.getId().toString()).setSubject("佣金提现").setPrice(withdraw.getPrice())
+                .setMerchantTransferId(withdraw.getId().toString()).setSubject("佣金提现").setPrice(BigDecimal.valueOf(withdraw.getPrice()))
                 .setUserAccount(userAccount).setUserName(userName).setUserIp(getClientIP())
                 .setUserId(withdraw.getUserId()).setUserType(UserTypeEnum.MEMBER.getValue()) // 用户信息
                 .setChannelExtras(channelExtras);

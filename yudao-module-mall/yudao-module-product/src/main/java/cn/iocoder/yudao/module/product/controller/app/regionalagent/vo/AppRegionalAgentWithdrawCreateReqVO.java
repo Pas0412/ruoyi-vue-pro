@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
 
 /**
  * 用户 APP - 地区代理提现创建 Request VO
@@ -18,7 +19,7 @@ public class AppRegionalAgentWithdrawCreateReqVO {
     @Schema(description = "提现金额，单位：分", requiredMode = Schema.RequiredMode.REQUIRED, example = "1000")
     @NotNull(message = "提现金额不能为空")
     @Positive(message = "提现金额必须大于零")
-    private Integer price;
+    private BigDecimal price;
 
     @Schema(description = "提现类型", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
     @NotNull(message = "提现类型不能为空")
@@ -44,11 +45,11 @@ public class AppRegionalAgentWithdrawCreateReqVO {
     @Schema(description = "备注", example = "提现申请")
     private String remark;
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

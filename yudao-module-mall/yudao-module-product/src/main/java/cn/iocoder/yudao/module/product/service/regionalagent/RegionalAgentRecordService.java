@@ -9,6 +9,7 @@ import cn.iocoder.yudao.module.product.service.regionalagent.bo.RegionalAgentAdd
 import cn.iocoder.yudao.module.product.service.regionalagent.bo.UserRegionalAgentSummaryRespBO;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -58,7 +59,7 @@ public interface RegionalAgentRecordService {
      * @param brokeragePrice 佣金
      * @param title          标题
      */
-    void addRegionalAgentBrokerage(Long agentId, RegionalAgentRecordBizTypeEnum bizType, String bizId, Integer brokeragePrice, String title);
+    void addRegionalAgentBrokerage(Long agentId, RegionalAgentRecordBizTypeEnum bizType, String bizId, BigDecimal brokeragePrice, String title);
 
     /**
      * 减少地区代理佣金【只针对指定代理】
@@ -69,8 +70,8 @@ public interface RegionalAgentRecordService {
      * @param brokeragePrice 佣金
      * @param title          标题
      */
-    default void reduceRegionalAgentBrokerage(Long agentId, RegionalAgentRecordBizTypeEnum bizType, String bizId, Integer brokeragePrice, String title) {
-        addRegionalAgentBrokerage(agentId, bizType, bizId, -brokeragePrice, title);
+    default void reduceRegionalAgentBrokerage(Long agentId, RegionalAgentRecordBizTypeEnum bizType, String bizId, BigDecimal brokeragePrice, String title) {
+        addRegionalAgentBrokerage(agentId, bizType, bizId, brokeragePrice.negate(), title);
     }
 
     /**

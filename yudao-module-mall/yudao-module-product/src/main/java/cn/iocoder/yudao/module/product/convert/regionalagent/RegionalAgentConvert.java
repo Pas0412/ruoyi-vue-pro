@@ -8,6 +8,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -23,6 +25,7 @@ public interface RegionalAgentConvert {
     RegionalAgentDO convert(RegionalAgentCreateReqVO bean);
 
     RegionalAgentDO convert(RegionalAgentUpdateReqVO bean);
+
 
     RegionalAgentRespVO convert(RegionalAgentDO bean);
 
@@ -52,5 +55,18 @@ public interface RegionalAgentConvert {
     List<AppRegionalAgentRespVO> convertAppList(List<RegionalAgentDO> list);
 
     PageResult<AppRegionalAgentRespVO> convertAppPage(PageResult<RegionalAgentDO> page);
+
+    /**
+     * 将元转换为分
+     * @param yuan 元金额（BigDecimal）
+     * @return 分金额（Integer）
+     */
+    default Integer convertYuanToFen(BigDecimal yuan) {
+        if (yuan == null) {
+            return 0;
+        }
+        // 使用 setScale 确保精度，然后转换为分
+        return yuan.setScale(2, RoundingMode.HALF_UP).multiply(new BigDecimal(100)).intValue();
+    }
 
 }

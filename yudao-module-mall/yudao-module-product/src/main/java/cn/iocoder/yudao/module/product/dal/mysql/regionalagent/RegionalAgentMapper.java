@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -50,13 +51,13 @@ public interface RegionalAgentMapper extends BaseMapperX<RegionalAgentDO> {
     }
 
     @Update("UPDATE product_regional_agent SET brokerage_price = brokerage_price + #{price} WHERE id = #{id}")
-    int updateBrokeragePrice(@Param("id") Long id, @Param("price") Integer price);
+    int updateBrokeragePrice(@Param("id") Long id, @Param("price") BigDecimal price);
 
     @Update("UPDATE product_regional_agent SET frozen_brokerage_price = frozen_brokerage_price + #{price} WHERE id = #{id}")
-    int updateFrozenBrokeragePrice(@Param("id") Long id, @Param("price") Integer price);
+    int updateFrozenBrokeragePrice(@Param("id") Long id, @Param("price") BigDecimal price);
 
-    @Update("UPDATE product_regional_agent SET frozen_brokerage_price = frozen_brokerage_price - #{frozenPrice}, brokerage_price = brokerage_price + #{frozenPrice} WHERE id = #{id}")
-    int updateFrozenPriceDecrAndPriceIncr(@Param("id") Long id, @Param("frozenPrice") Integer frozenPrice);
+    @Update("UPDATE product_regional_agent SET frozen_brokerage_price = frozen_brokerage_price - #{frozenPrice}, brokerage_price = brokerage_price + #{price} WHERE id = #{id}")
+    int updateFrozenPriceDecrAndPriceIncr(@Param("id") Long id, @Param("frozenPrice") BigDecimal frozenPrice, @Param("price") BigDecimal price);
 
     default boolean existsByUserIdAndStatusIn(Long userId, List<Integer> statusList) {
         return selectCount(new LambdaQueryWrapperX<RegionalAgentDO>()

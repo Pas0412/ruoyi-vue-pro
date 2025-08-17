@@ -8,6 +8,7 @@ import cn.iocoder.yudao.module.product.dal.dataobject.regionalagent.RegionalAgen
 import cn.iocoder.yudao.module.product.enums.regionalagent.RegionalAgentStatusEnum;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
@@ -111,26 +112,26 @@ public interface RegionalAgentService {
      * 更新代理佣金
      *
      * @param id    代理编号
-     * @param price 佣金变动金额
+     * @param price 佣金金额
      * @return 是否更新成功
      */
-    boolean updateAgentPrice(Long id, Integer price);
+    boolean updateAgentPrice(Long id, BigDecimal price);
 
     /**
      * 更新代理冻结佣金
      *
      * @param id          代理编号
-     * @param frozenPrice 冻结佣金变动金额
+     * @param frozenPrice 冻结佣金金额
      */
-    void updateAgentFrozenPrice(Long id, Integer frozenPrice);
+    void updateAgentFrozenPrice(Long id, BigDecimal frozenPrice);
 
     /**
-     * 冻结佣金减少，可用佣金增加
+     * 冻结佣金减少并增加可用佣金
      *
      * @param id          代理编号
      * @param frozenPrice 冻结佣金金额
      */
-    void updateFrozenPriceDecrAndPriceIncr(Long id, Integer frozenPrice);
+    void updateFrozenPriceDecrAndPriceIncr(Long id, BigDecimal frozenPrice, BigDecimal price);
 
     /**
      * 根据收货地址获取对应的地区代理

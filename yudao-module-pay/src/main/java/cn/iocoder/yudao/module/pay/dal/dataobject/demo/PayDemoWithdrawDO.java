@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -34,7 +35,7 @@ public class PayDemoWithdrawDO extends BaseDO {
     /**
      * 提现金额，单位：分
      */
-    private Integer price;
+    private BigDecimal price;
 
     /**
      * 收款人账号

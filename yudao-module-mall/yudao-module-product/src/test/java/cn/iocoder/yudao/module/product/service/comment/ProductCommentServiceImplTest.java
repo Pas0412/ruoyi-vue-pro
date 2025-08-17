@@ -104,7 +104,7 @@ public class ProductCommentServiceImplTest extends BaseDbUnitTest {
         Long spuId = productComment.getSpuId();
 
         // 测试 userNickname 不匹配
-        productCommentMapper.insert(cloneIgnoreId(productComment, o -> o.setUserNickname("王三").setScores(ProductCommentScoresEnum.ONE.getScores())));
+        productCommentMapper.insert(cloneIgnoreId(productComment, o -> o.setUserNickname("王三")));
         // 测试 orderId 不匹配
         productCommentMapper.insert(cloneIgnoreId(productComment, o -> o.setOrderId(generateId())));
         // 测试 spuId 不匹配

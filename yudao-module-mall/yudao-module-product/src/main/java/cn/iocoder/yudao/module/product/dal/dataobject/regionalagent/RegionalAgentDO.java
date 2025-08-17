@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -77,13 +78,13 @@ public class RegionalAgentDO extends BaseDO {
      */
     private String auditReason;
     /**
-     * 可用佣金，单位：分
+     * 可用佣金，单位：元
      */
-    private Integer brokeragePrice;
+    private BigDecimal brokeragePrice;
     /**
-     * 冻结佣金，单位：分
+     * 冻结佣金，单位：元
      */
-    private Integer frozenBrokeragePrice;
+    private BigDecimal frozenBrokeragePrice;
     /**
      * 成为代理时间
      */
@@ -130,11 +131,11 @@ public class RegionalAgentDO extends BaseDO {
         return auditReason;
     }
 
-    public Integer getBrokeragePrice() {
+    public BigDecimal getBrokeragePrice() {
         return brokeragePrice;
     }
 
-    public Integer getFrozenBrokeragePrice() {
+    public BigDecimal getFrozenBrokeragePrice() {
         return frozenBrokeragePrice;
     }
 
@@ -182,11 +183,11 @@ public class RegionalAgentDO extends BaseDO {
         this.auditReason = auditReason;
     }
 
-    public void setBrokeragePrice(Integer brokeragePrice) {
+    public void setBrokeragePrice(BigDecimal brokeragePrice) {
         this.brokeragePrice = brokeragePrice;
     }
 
-    public void setFrozenBrokeragePrice(Integer frozenBrokeragePrice) {
+    public void setFrozenBrokeragePrice(BigDecimal frozenBrokeragePrice) {
         this.frozenBrokeragePrice = frozenBrokeragePrice;
     }
 

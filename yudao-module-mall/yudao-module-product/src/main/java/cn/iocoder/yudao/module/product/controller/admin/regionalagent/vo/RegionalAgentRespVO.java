@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.product.controller.admin.regionalagent.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 地区代理 Response VO")
@@ -40,10 +41,10 @@ public class RegionalAgentRespVO {
     private String auditRemark;
 
     @Schema(description = "可用佣金", requiredMode = Schema.RequiredMode.REQUIRED, example = "1000")
-    private Integer brokeragePrice;
+    private BigDecimal brokeragePrice;
 
     @Schema(description = "冻结佣金", requiredMode = Schema.RequiredMode.REQUIRED, example = "100")
-    private Integer frozenBrokeragePrice;
+    private BigDecimal frozenBrokeragePrice;
 
     @Schema(description = "成为代理时间")
     private LocalDateTime agentTime;

@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.product.controller.app.regionalagent.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -44,11 +45,11 @@ public class AppRegionalAgentRespVO {
     @Schema(description = "审核备注", example = "审核通过")
     private String auditRemark;
 
-    @Schema(description = "可用佣金，单位：分", requiredMode = Schema.RequiredMode.REQUIRED, example = "1000")
-    private Integer brokeragePrice;
+    @Schema(description = "可用佣金，单位：元", requiredMode = Schema.RequiredMode.REQUIRED, example = "10.00")
+    private BigDecimal brokeragePrice;
 
-    @Schema(description = "冻结佣金，单位：分", requiredMode = Schema.RequiredMode.REQUIRED, example = "500")
-    private Integer frozenBrokeragePrice;
+    @Schema(description = "冻结佣金，单位：元", requiredMode = Schema.RequiredMode.REQUIRED, example = "5.00")
+    private BigDecimal frozenBrokeragePrice;
 
     @Schema(description = "成为代理时间")
     private LocalDateTime agentTime;

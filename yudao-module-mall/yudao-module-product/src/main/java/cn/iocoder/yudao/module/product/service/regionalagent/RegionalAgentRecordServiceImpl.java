@@ -20,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -74,8 +76,8 @@ public class RegionalAgentRecordServiceImpl implements RegionalAgentRecordServic
             // 计算该代理的佣金
             for (RegionalAgentAddReqBO addReqBO : list) {
                 // 根据代理级别计算佣金比例（这里可以根据业务需求调整）
-                Integer brokeragePrice = calculateBrokerageByLevel(addReqBO.getPrice(), agent.getAreaType());
-                if (brokeragePrice > 0) {
+                BigDecimal brokeragePrice = calculateBrokerageByLevel(addReqBO.getPrice(), agent.getAreaType());
+                if (brokeragePrice.compareTo(BigDecimal.ZERO) > 0) {
                     addRegionalAgentBrokerageRecord(agent, bizType, addReqBO.getBizId(), brokeragePrice, 
                             addReqBO.getTitle(), addReqBO.getDescription(), userId, getAgentLevel(agent.getAreaType()));
                 }
@@ -85,7 +87,7 @@ public class RegionalAgentRecordServiceImpl implements RegionalAgentRecordServic
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addRegionalAgentBrokerage(Long agentId, RegionalAgentRecordBizTypeEnum bizType, String bizId, Integer brokeragePrice, String title) {
+    public void addRegionalAgentBrokerage(Long agentId, RegionalAgentRecordBizTypeEnum bizType, String bizId, BigDecimal brokeragePrice, String title) {
         RegionalAgentDO agent = regionalAgentService.getRegionalAgent(agentId);
         if (agent == null || !RegionalAgentStatusEnum.APPROVED.getStatus().equals(agent.getStatus())) {
             log.error("[addRegionalAgentBrokerage][代理({})不存在或状态不正确]", agentId);
@@ -96,7 +98,7 @@ public class RegionalAgentRecordServiceImpl implements RegionalAgentRecordServic
     }
 
     private void addRegionalAgentBrokerageRecord(RegionalAgentDO agent, RegionalAgentRecordBizTypeEnum bizType, 
-                                                String bizId, Integer brokeragePrice, String title, String description,
+                                                String bizId, BigDecimal brokeragePrice, String title, String description,
                                                 Long sourceUserId, Integer sourceUserLevel) {
         // 创建佣金记录
         RegionalAgentRecordDO record = new RegionalAgentRecordDO();
@@ -106,7 +108,7 @@ public class RegionalAgentRecordServiceImpl implements RegionalAgentRecordServic
         record.setTitle(title);
         record.setDescription(description);
         record.setPrice(brokeragePrice);
-        record.setTotalPrice(agent.getBrokeragePrice() + agent.getFrozenBrokeragePrice() + brokeragePrice);
+        record.setTotalPrice(agent.getBrokeragePrice().add(agent.getFrozenBrokeragePrice()).add(brokeragePrice));
         record.setStatus(RegionalAgentRecordStatusEnum.WAIT_SETTLEMENT.getStatus());
         record.setFrozenTime(LocalDateTime.now());
         record.setUnfreezeTime(LocalDateTime.now().plusDays(30)); // 30天后解冻
@@ -141,9 +143,9 @@ public class RegionalAgentRecordServiceImpl implements RegionalAgentRecordServic
             RegionalAgentDO agent = regionalAgentService.getRegionalAgent(record.getUserId());
             if (agent != null) {
                 if (RegionalAgentRecordStatusEnum.WAIT_SETTLEMENT.getStatus().equals(record.getStatus())) {
-                    regionalAgentService.updateAgentFrozenPrice(agent.getId(), -record.getPrice());
+                    regionalAgentService.updateAgentFrozenPrice(agent.getId(), record.getPrice().negate());
                 } else if (RegionalAgentRecordStatusEnum.SETTLEMENT.getStatus().equals(record.getStatus())) {
-                    regionalAgentService.updateAgentPrice(agent.getId(), -record.getPrice());
+                    regionalAgentService.updateAgentPrice(agent.getId(), record.getPrice().negate());
                 }
             }
         });
@@ -191,7 +193,7 @@ public class RegionalAgentRecordServiceImpl implements RegionalAgentRecordServic
         // 更新代理佣金：冻结佣金减少，可用佣金增加
         RegionalAgentDO agent = regionalAgentService.getRegionalAgent(record.getUserId());
         if (agent != null) {
-            regionalAgentService.updateFrozenPriceDecrAndPriceIncr(agent.getId(), record.getPrice());
+            regionalAgentService.updateFrozenPriceDecrAndPriceIncr(agent.getId(), record.getPrice(), record.getPrice());
         }
         
         return true;
@@ -213,24 +215,28 @@ public class RegionalAgentRecordServiceImpl implements RegionalAgentRecordServic
     }
 
     /**
-     * 根据代理级别计算佣金
+     * 根据基础价格和地区类型计算佣金
      *
-     * @param basePrice 基础金额
+     * @param basePrice 基础价格（分）
      * @param areaType  地区类型
-     * @return 佣金金额
+     * @return 佣金金额（元，保留一位小数）
      */
-    private Integer calculateBrokerageByLevel(Integer basePrice, Integer areaType) {
+    private BigDecimal calculateBrokerageByLevel(Integer basePrice, Integer areaType) {
+        // 将基础金额从分转换为元
+        BigDecimal basePriceYuan = new BigDecimal(basePrice).divide(new BigDecimal(100), 2, RoundingMode.HALF_UP);
+        
         // 根据地区类型设置不同的佣金比例
-        double rate = 0.0;
+        BigDecimal rate = BigDecimal.ZERO;
         if (areaType.equals(4)) { // 县级代理
-            rate = 0.20; // 20%
+            rate = new BigDecimal("0.20"); // 20%
         } else if (areaType.equals(3)) { // 市级代理
-            rate = 0.15; // 15%
+            rate = new BigDecimal("0.15"); // 15%
         } else if (areaType.equals(2)) { // 省级代理
-            rate = 0.10; // 10%
+            rate = new BigDecimal("0.10"); // 10%
         }
         
-        return MoneyUtils.calculateRatePriceFloor(basePrice, rate);
+        // 计算佣金并保留一位小数
+        return basePriceYuan.multiply(rate).setScale(1, RoundingMode.HALF_UP);
     }
 
     /**

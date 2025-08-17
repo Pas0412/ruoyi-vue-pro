@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -55,16 +56,16 @@ public class RegionalAgentRecordDO extends BaseDO {
      */
     private String description;
     /**
-     * 金额，单位：分
+     * 金额，单位：元
      *
      * 正数，表示增加
      * 负数，表示减少
      */
-    private Integer price;
+    private BigDecimal price;
     /**
-     * 当前总佣金，单位：分
+     * 当前总佣金，单位：元
      */
-    private Integer totalPrice;
+    private BigDecimal totalPrice;
     /**
      * 状态
      *
@@ -117,11 +118,11 @@ public class RegionalAgentRecordDO extends BaseDO {
         return description;
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public Integer getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
@@ -169,13 +170,6 @@ public class RegionalAgentRecordDO extends BaseDO {
         this.description = description;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public void setTotalPrice(Integer totalPrice) {
-        this.totalPrice = totalPrice;
-    }
 
     public void setStatus(Integer status) {
         this.status = status;

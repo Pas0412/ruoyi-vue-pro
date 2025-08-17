@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.product.controller.admin.regionalagent.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 地区代理记录 Response VO")
@@ -28,10 +29,10 @@ public class RegionalAgentRecordRespVO {
     private String description;
 
     @Schema(description = "金额", requiredMode = Schema.RequiredMode.REQUIRED, example = "100")
-    private Integer price;
+    private BigDecimal price;
 
     @Schema(description = "当前总佣金", requiredMode = Schema.RequiredMode.REQUIRED, example = "1000")
-    private Integer totalPrice;
+    private BigDecimal totalPrice;
 
     @Schema(description = "状态", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
     private Integer status;

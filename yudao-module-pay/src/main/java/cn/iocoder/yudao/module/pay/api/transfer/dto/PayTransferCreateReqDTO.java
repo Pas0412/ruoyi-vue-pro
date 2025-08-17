@@ -9,6 +9,7 @@ import lombok.Data;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +57,7 @@ public class PayTransferCreateReqDTO {
      */
     @Min(value = 1, message = "转账金额必须大于零")
     @NotNull(message = "转账金额不能为空")
-    private Integer price;
+    private BigDecimal price;
 
     /**
      * 转账标题
