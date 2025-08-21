@@ -384,7 +384,7 @@ public class MemberUserServiceImpl implements MemberUserService {
     @Override
     public boolean isValidMember(Long userId) {
         MemberUserDO user = memberUserMapper.selectById(userId);
-        if (user == null || user.getMemberExpireTime() == null) {
+        if ((user == null) || (!"1".equals(user.getLevelId()))) {
             return false;
         }
 
