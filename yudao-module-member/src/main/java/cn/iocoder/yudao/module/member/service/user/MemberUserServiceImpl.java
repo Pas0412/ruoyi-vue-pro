@@ -34,6 +34,7 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
@@ -384,7 +385,7 @@ public class MemberUserServiceImpl implements MemberUserService {
     @Override
     public boolean isValidMember(Long userId) {
         MemberUserDO user = memberUserMapper.selectById(userId);
-        if ((user == null) || (!"1".equals(user.getLevelId()))) {
+        if ((user == null) || (!Objects.equals(user.getLevelId(),1L))) {
             return false;
         }
 
